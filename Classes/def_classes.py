@@ -1,7 +1,5 @@
 import random
 import Classes.variablen
-
-
 class Monster:
     def __init__(self, HP, Gattung, Dmg, Level):
         self.HP=HP
@@ -17,6 +15,10 @@ class GameState:
         self.playerinventar = playerinventar
 
 
+def schadenbrechenen (gamestate):
+    schadenfürdenkampf = gamestate.playerdmg+gamestate.playerinventar["mainhand"]+gamestate.playerinventar["offhand"]
+    return schadenfürdenkampf
+
 
 def random_waffe():
     waffenliste = Classes.variablen.Waffenliste
@@ -29,49 +31,74 @@ def wurf(unter=0, ober=100):
     return zahl
 
 # wenn die hp meines monsters bei 0 oder kleiner ist besteht die chance eine waffe zu finden die mein dmg erhöt oder ein potion zu finden der meine hp erhöt
-def w_oder_p(monster, gamestate, Hp_pot):
-    w_oderp = wurf(0,100)
+def w_oder_p(monster, gamestate):
     if monster.HP <= 0:
-        if w_oderp >=50:
-            gamestate.playerhp = gamestate.playerhp + Hp_pot
-            print("Dein Leben erhöht sich um", Hp_pot)
+        if type(welches_item_findest_du())== type(Classes.variablen.Wappon):
+            gamestate.playerinventar["mainhand"] == 0
+
+        if type(welches_item_findest_du())== type(Classes.variablen.Items):
+            pass
+
         else:
             waffe = random_waffe()
-            gamestate.playerinventar["mainhand"] = gamestate.playerinventar["mainhand"] + waffe.Dmg
-            gamestate.playerdmg = gamestate.playerdmg+gamestate.playerinventar["mainhand"]
-            print(gamestate.playerinventar["mainhand"])
             print("Du Findest ein", waffe.Name)
-            print("Dein Schaden erhöt sich um", waffe.Dmg, "dein Dmg beträgt jetzt", gamestate.playerdmg)
+            if gamestate.playerinventar["mainhand"] ==0:
+                gamestate.playerinventar["mainhand"] = waffe.Dmg
+            elif gamestate.playerinventar["offhand"] ==0:
+                gamestate.playerinventar["offhand"] = waffe.Dmg
+            else:
+                #if gamestate.playerinventar["offhand"] >= 0 and gamestate.playerinventar["mainhand"]>0
+                abfrage= input("du hast bereits 2 waffen. Willst du die neue waffe ersetzen oder nicht")
+                if abfrage == "ja":
+                    abfrage = input("welche waffe willst du ersetzen? mainhand oder offhand")
+                    if abfrage == "mainhand":
+                        gamestate.playerinventar["mainhand"] = waffe.Dmg
+                        print("deine Mainhand wurde ersetzt")
+                    else:
+                            gamestate.playerinventar["offhand"] = waffe.Dmg
+                            print("deine offhand wurde ersetzt")
+                else:
+                    print("gut du hast die neue waffe weggeworfen")
+                    return gamestate
+            print(gamestate.playerinventar["mainhand"])
+
+            print("Dein Schaden erhöt sich um", waffe.Dmg,)
 
 
     return gamestate
 # Kampfsystem
 
+def welches_item_findest_du():
+    randomizeliste = [Classes.variablen.Waffenliste, Classes.variablen.Itemliste]
+    object = random.choice(randomizeliste)
+    return random.choice(object)# < ein object
+
 def monsterwahl():
     Warg = Monster(25, "Warg", 20, 2)
     Wolf = Monster(20, "Wolf", 10, 2)
     Oger = Monster(50, "Oger", 30, 3)
-    Mensch = Monster(100, "Mensch", 100, 4)
+    Mensch = Monster(100, "Mensch", 0, 4)
     Orc = Monster(70, "Orc", 50, 4)
     Junger_Scavenger = Monster(10, "junger Scavenger", 10, 1)
     Scavenger = Monster(20, "Scavenger", 15, 1)
     monsterliste = [Warg, Wolf, Oger, Orc, Junger_Scavenger, Scavenger, Mensch]
     monsterLevelListen = [[monster for monster in monsterliste if monster.Level == lvl] for lvl in range(1,5)]
-    return random.choice(random.choices(monsterLevelListen, weights=(40,30,20,20), k=1)[0])
+    return random.choice(random.choices(monsterLevelListen, weights=(40,30,20,10), k=1)[0])
 
 
 def kampf (gamestate, infight):
 
 #Monsterwahl, gegen welches Monster gekämpft werden soll
+    playerschaden = schadenbrechenen(gamestate)
     monster = monsterwahl()
     while infight: #kampf gegen ein Mosnter aus monsterlsite
         print("Du kämpfst gegen einen", monster.Gattung, "und seine Hp betragen", monster.HP, "Er macht", monster.Dmg, "Schaden.", "Deine Hp betragen zu beginn", gamestate.playerhp)
         while monster.HP>0 and gamestate.playerhp>0 and infight==True: # wärend beide hp über 0 liegen wird gekämpft
             frage = input("Kämpfen oder Laufen?\n")
-            if frage == "kämpfen": #sollte die antwort kämpfen sein soll der kampf bis zum tot geämpft werden
+            if frage in ["kämpfen", "k"]: #sollte die antwort kämpfen sein soll der kampf bis zum tot geämpft werden
                 treffer = wurf(0,100)
-                if treffer >= 50:
-                    monster.HP = monster.HP-gamestate.playerdmg
+                if treffer >= 30:
+                    monster.HP = monster.HP-playerschaden
                     print("das Monster hat noch ", monster.HP, "Hp")
                 else:
                     gamestate.playerhp = gamestate.playerhp-monster.Dmg
@@ -84,14 +111,12 @@ def kampf (gamestate, infight):
                     gamestate.playerhp = gamestate.playerhp-monster.Dmg
                     print("Du konntest fliegen aber", monster.Gattung, "macht dir Schaden in höhe von", monster.Dmg)
                     infight = False
-            gamestate = w_oder_p(monster, gamestate, Classes.variablen.Kleiner_Hp_Pot.Wert)
+            gamestate = w_oder_p(monster, gamestate)
         infight = False
     return gamestate
 
 
 
 # inventar main hand  offhand   helm  rüstung...
-#wenn man sich für eine richtug entscheidet gibt es mehr wahrscheinlichkeiten als nur ein monser zu treffen
-#zum beispiel noch ein item zu finden oder einfach eine story
-# schaden auf default   wenn eine waffe aufgehoben wird, wird der default  wert nixht erhöt     das heißt ein dic mit key = waffen namen und value = der waffenschaden
-# mit dichname[key]< für den value von diesem key
+#
+

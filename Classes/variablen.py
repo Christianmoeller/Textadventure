@@ -19,3 +19,5 @@ Waffenliste = [Altes_Schwert, Lang_Schwert, Neues_Schwert, Links_Schwert]
 #Items wie Hp Pot
 Kleiner_Hp_Pot = Items(20, "Hp Pot")
 Großer_Hp_Pot = Items(40, "Großer Hp Pot")
+Brustplatte = Items(20,"Brustplatte")
+Itemliste = [Kleiner_Hp_Pot, Großer_Hp_Pot, Brustplatte]
