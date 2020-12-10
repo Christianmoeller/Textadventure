@@ -1,7 +1,7 @@
 from Classes.def_classes import *
 
 def gameloop():
-    gs = GameState("", 100, 20,{"mainhand":0,"offhand" :0, "brust":0})
+    gs = GameState("", 100, 20,{"mainhand":0,"offhand" :0},{"Helm":0, "Brust":0, "Beine":0})
     gs.playername    = input("Wie heißt du?\n")
     print("Hallo", gs.playername + ".")
 
@@ -18,6 +18,8 @@ def gameloop():
             print("HP: {}".format(gs.playerhp))
         elif userinput == "dmg":
             print("Dmg: {}".format(gs.playerdmg),"+",gs.playerinventar["mainhand"], "+", gs.playerinventar["offhand"])
+        elif userinput in ["rüstung", "r"]:
+            print("Rüstung:",gs.playerrüstung["Helm"], "+", gs.playerrüstung["Brust"], "+", gs.playerrüstung["Beine"])
         elif userinput in ["rechts", "links", "vor", "zurück","v"]:
             ergebnis = wurf(0,100)
             if ergebnis >= 50:
