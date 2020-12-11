@@ -11,10 +11,10 @@ class GameState:
         self.playerrüstung = playerrüstung
 
 
-def schadenbrechenen (gamestate):
+def schadenbrechenen (gamestate):#< schaden meiens spielers wird berechent und zurückgegeben
     return gamestate.playerdmg+gamestate.playerinventar["mainhand"]+gamestate.playerinventar["offhand"]
 
-def random_waffe():
+def random_waffe():#eine random waffe wird rurückgegeben
     waffenliste = Classes.variablen.Waffenliste
     w_choise = random.choice(waffenliste)
     return w_choise
@@ -80,7 +80,7 @@ def w_oder_p(monster, gamestate):
 def Hp_pot(gamestate, potion):
     gamestate.playerhp = gamestate.playerhp + potion.Wert
     return gamestate
-def welches_item_findest_du():
+def welches_item_findest_du():#entweder waffe, pot, oderrüstung wird erstellt und zurückgegeben
     randomizeliste = [Classes.variablen.Waffenliste, Classes.variablen.Potionliste, Classes.variablen.Rüstungsliste]
     ausgewählteliste = random.choice(randomizeliste)
     object = random.choice(ausgewählteliste)
@@ -88,30 +88,58 @@ def welches_item_findest_du():
 
 #TODO: hier drin hast du auch 2 zentrale Ereignisse: spieler wählt kämpfen, oder spieler wählt laufen.
 # Die können auch in eine eigene Methode rein
-def kampf (gamestate, infight):
-#Monsterwahl, gegen welches Monster gekämpft werden soll
+#def kampf (gamestate, infight):
+#    while infight: #kampf gegen ein Mosnter aus monsterlsite
+#        print("Du musst gegen ein", monster.Gattung, "kämpfen. Seine Hp betragen", monster.HP, "und er macht", monster.Dmg, "Schaden.", "Deine Hp betragen zu beginn", gamestate.playerhp)
+#        while monster.HP>0 and gamestate.playerhp>0 and infight==True: # wärend beide hp über 0 liegen wird gekämpft
+#            frage = input("Kämpfen oder Laufen?\n")
+#            if frage in ["kämpfen", "k"]:
+#                treffer = wurf(0,100)
+#                if treffer >= 30:
+#                    monster.HP = monster.HP-playerschaden
+#                    print(monster.Gattung, "hat noch ", monster.HP, "Hp")
+#                else:
+#                    gamestate.playerhp = gamestate.playerhp-Classes.monster.monsterdmg(gamestate, monster.Dmg)
+#                    print("Du hast noch", gamestate.playerhp, "Hp")
+#            elif frage == "laufen": #sollte er fliehen bestehtn eine chance von 50% das er entkommt und keinen dmg bekommt  oder einmal schaden bekommt
+#                if wurf(0,2) == 1:
+#                    print("Glück gehabt. Du entkommst ohne schaden zu bekommen\n")
+#                    infight = False
+#                else:
+#                    gamestate.playerhp = gamestate.playerhp-monster.Dmg
+#                    print("Du konntest fliegen aber", monster.Gattung, "macht dir Schaden in höhe von", monster.Dmg)
+#                    infight = False
+#            gamestate = w_oder_p(monster, gamestate)
+#        infight = False
+#    return gamestate
+
+def fight(gamestate,monster, infight):
     playerschaden = schadenbrechenen(gamestate)
-    monster = Classes.monster.monsterwahl()
-    while infight: #kampf gegen ein Mosnter aus monsterlsite
-        print("Du musst gegen ein", monster.Gattung, "kämpfen und seine Hp betragen", monster.HP, "Er macht", monster.Dmg, "Schaden.", "Deine Hp betragen zu beginn", gamestate.playerhp)
-        while monster.HP>0 and gamestate.playerhp>0 and infight==True: # wärend beide hp über 0 liegen wird gekämpft
-            frage = input("Kämpfen oder Laufen?\n")
-            if frage in ["kämpfen", "k"]:
-                treffer = wurf(0,100)
-                if treffer >= 30:
-                    monster.HP = monster.HP-playerschaden
-                    print("das Monster hat noch ", monster.HP, "Hp")
-                else:
-                    gamestate.playerhp = gamestate.playerhp-Classes.monster.monsterdmg(gamestate, monster.Dmg)
-                    print("Du hast noch", gamestate.playerhp, "Hp")
-            elif frage == "laufen": #sollte er fliehen bestehtn eine chance von 50% das er entkommt und keinen dmg bekommt  oder einmal schaden bekommt
-                if wurf(0,2) == 1:
-                    print("Glück gehabt. Du entkommst ohne schaden zu bekommen\n")
-                    infight = False
-                else:
-                    gamestate.playerhp = gamestate.playerhp-monster.Dmg
-                    print("Du konntest fliegen aber", monster.Gattung, "macht dir Schaden in höhe von", monster.Dmg)
-                    infight = False
-            gamestate = w_oder_p(monster, gamestate)
-        infight = False
+    while monster.HP > 0 and gamestate.playerhp > 0 and infight == True:
+        if wurf(0,100)>80: #< liegt die zahl zwischen 80-100 trifft der gegner mich
+            gamestate.playerhp = gamestate.playerhp-Classes.monster.monsterdmg_berechnung(gamestate, monster.Dmg)
+        if monster.HP <=0:
+            loot()
+            print("Monster tot")
+            infight = False
+        else:
+            monster.HP = monster.HP-schadenbrechenen(gamestate)
+
     return gamestate
+
+
+def laufen():
+    print("Du bist davon gelaufen! Wie eine kleine...")
+
+def kampf_laufen():
+    return input("Willst du \"kämpfen\" oder \"laufen\"")
+def loot():#<bekommt man loot?
+    if wurf(0,100)>0:
+        gefundenes_item = welches_item_findest_du()
+        if gefundenes_item == Classes.variablen.Wappon:
+            print("Waffe gefunden")
+        elif gefundenes_item == Classes.variablen.Armor:
+            print("rüstung gefunen")
+        elif gefundenes_item == Classes.variablen.Potion:
+            print("potion gefunden")
+

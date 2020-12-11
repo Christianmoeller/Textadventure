@@ -7,7 +7,7 @@ class Monster:
         self.Gattung=Gattung
         self.Level = Level
 
-def monsterdmg(spielerrüstung, monsterdmg):
+def monsterdmg_berechnung(spielerrüstung, monsterdmg):
     komletterüstung = spielerrüstung.playerrüstung["Helm"]+spielerrüstung.playerrüstung["Brust"]+spielerrüstung.playerrüstung["Beine"]
     x = monsterdmg-komletterüstung
     if x <0:
@@ -15,6 +15,10 @@ def monsterdmg(spielerrüstung, monsterdmg):
     return x
 
 def monsterwahl():
+    monsterLevelListen = [[monster for monster in all_monster() if monster.Level == lvl] for lvl in range(1,5)]
+    return random.choice(random.choices(monsterLevelListen, weights=(40,30,20,10), k=1)[0])
+
+def all_monster():
     Warg = Monster(25, "Warg", 20, 2)
     Wolf = Monster(20, "Wolf", 10, 2)
     Oger = Monster(50, "Oger", 30, 3)
@@ -22,6 +26,4 @@ def monsterwahl():
     Orc = Monster(70, "Orc", 50, 4)
     Junger_Scavenger = Monster(10, "junger Scavenger", 10, 1)
     Scavenger = Monster(20, "Scavenger", 15, 1)
-    monsterliste = [Warg, Wolf, Oger, Orc, Junger_Scavenger, Scavenger, Mensch]
-    monsterLevelListen = [[monster for monster in monsterliste if monster.Level == lvl] for lvl in range(1,5)]
-    return random.choice(random.choices(monsterLevelListen, weights=(40,30,20,10), k=1)[0])
+    return [Warg, Wolf, Oger, Orc, Junger_Scavenger, Scavenger, Mensch]
