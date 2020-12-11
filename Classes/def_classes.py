@@ -1,13 +1,6 @@
 import random
 import Classes.variablen
-
-#TODO lager alles was Monster betrifft in ein eigenes Modul aus
-class Monster:
-    def __init__(self, HP, Gattung, Dmg, Level):
-        self.HP=HP
-        self.Dmg=Dmg
-        self.Gattung=Gattung
-        self.Level = Level
+import Classes.monster
 
 class GameState:
     def __init__(self, playername, playerhp, playerdmg, playerinventar, playerrüstung):
@@ -38,6 +31,7 @@ def wurf(unter=0, ober=100):
 #TODO: Sehr viel von deinem Code hier ist nach dem Schema "Eingabe einholen, Reaktion printen"
 # Kannst du eine Methode schreiben, die für dich dieses Schema abarbeitet? Also eine Funktion, die
 # einen Fragestring, und eine Liste an möglichen antworten nimmt, und den Index der vom Spieler gegebenen Antwort zurückgibt?
+#
 
 # wenn die hp meines monsters bei 0 oder kleiner ist besteht die chance eine waffe zu finden die mein dmg erhöt oder ein potion zu finden der meine hp erhöt
 def w_oder_p(monster, gamestate):
@@ -92,33 +86,12 @@ def welches_item_findest_du():
     object = random.choice(ausgewählteliste)
     return object# < ein object
 
-#TODO lager alles was Monster betrifft in ein eigenes Modul aus
-def monsterwahl():
-    Warg = Monster(25, "Warg", 20, 2)
-    Wolf = Monster(20, "Wolf", 10, 2)
-    Oger = Monster(50, "Oger", 30, 3)
-    Mensch = Monster(100, "Mensch", 0, 4)
-    Orc = Monster(70, "Orc", 50, 4)
-    Junger_Scavenger = Monster(10, "junger Scavenger", 10, 1)
-    Scavenger = Monster(20, "Scavenger", 15, 1)
-    monsterliste = [Warg, Wolf, Oger, Orc, Junger_Scavenger, Scavenger, Mensch]
-    monsterLevelListen = [[monster for monster in monsterliste if monster.Level == lvl] for lvl in range(1,5)]
-    return random.choice(random.choices(monsterLevelListen, weights=(40,30,20,10), k=1)[0])
-
-#TODO lager alles was Monster betrifft in ein eigenes Modul aus
-def monsterdmg(spielerrüstung, monsterdmg):
-    komletterüstung = spielerrüstung.playerrüstung["Helm"]+spielerrüstung.playerrüstung["Brust"]+spielerrüstung.playerrüstung["Beine"]
-    x = monsterdmg-komletterüstung
-    if x <0:
-        x= 0
-    return x
-
 #TODO: hier drin hast du auch 2 zentrale Ereignisse: spieler wählt kämpfen, oder spieler wählt laufen.
 # Die können auch in eine eigene Methode rein
 def kampf (gamestate, infight):
 #Monsterwahl, gegen welches Monster gekämpft werden soll
     playerschaden = schadenbrechenen(gamestate)
-    monster = monsterwahl()
+    monster = Classes.monster.monsterwahl()
     while infight: #kampf gegen ein Mosnter aus monsterlsite
         print("Du musst gegen ein", monster.Gattung, "kämpfen und seine Hp betragen", monster.HP, "Er macht", monster.Dmg, "Schaden.", "Deine Hp betragen zu beginn", gamestate.playerhp)
         while monster.HP>0 and gamestate.playerhp>0 and infight==True: # wärend beide hp über 0 liegen wird gekämpft
@@ -129,11 +102,11 @@ def kampf (gamestate, infight):
                     monster.HP = monster.HP-playerschaden
                     print("das Monster hat noch ", monster.HP, "Hp")
                 else:
-                    gamestate.playerhp = gamestate.playerhp-monsterdmg(gamestate, monster.Dmg)
+                    gamestate.playerhp = gamestate.playerhp-Classes.monster.monsterdmg(gamestate, monster.Dmg)
                     print("Du hast noch", gamestate.playerhp, "Hp")
             elif frage == "laufen": #sollte er fliehen bestehtn eine chance von 50% das er entkommt und keinen dmg bekommt  oder einmal schaden bekommt
                 if wurf(0,2) == 1:
-                    print("Glück gehabt. Du entkommst ohne schaden zu bekommen")
+                    print("Glück gehabt. Du entkommst ohne schaden zu bekommen\n")
                     infight = False
                 else:
                     gamestate.playerhp = gamestate.playerhp-monster.Dmg
@@ -142,9 +115,3 @@ def kampf (gamestate, infight):
             gamestate = w_oder_p(monster, gamestate)
         infight = False
     return gamestate
-
-
-
-# inventar main hand  offhand   helm  rüstung...
-#
-
