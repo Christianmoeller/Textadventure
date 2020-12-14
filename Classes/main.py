@@ -1,9 +1,10 @@
 from Classes.def_classes import *
 from Classes.monster import *
 def begegnung (gs):
-    antwortmöglichkeuten = {"kämpfen":fight, "laufen":laufen}
-    frage = "willst du kämpfen oder laufen"
-    interaktion(antwortmöglichkeuten, gs, frage)
+    if wurf(0,100)>=50:
+        antwortmöglichkeuten = {"kämpfen":fight, "laufen":laufen}
+        frage = "Willst du kämpfen oder laufen\n"
+        interaktion(antwortmöglichkeuten, gs, frage)
 
 def _help(gs):
     print("Willst Du deine Hp wissen? gebe \"hp\" ein\nWillst Du deinen Dmg wissen? Gebe \"dmg\" ein\nWillst Du eine Rüstung sehen? gebe \"rüstung\" ein\n")
@@ -23,15 +24,11 @@ def hp_abfrage(gs):
 def dmg_abfrage(gs):
     print("Dein Aktueller Schaden beträgt:",gs.playerdmg+gs.playerinventar["mainhand"]+gs.playerinventar["offhand"])
 def rüstung_abfrage(gs):
-    print("Dein Aktueller Rüstungswert ist:", gs.playerrüstung["Helm"]+gs.playerrüstung["Brust"]+gs.playerrüstung["Beine"])
+    print("Helm",gs.playerrüstung["Helm"],"Brust",gs.playerrüstung["Brust"], "Beine", gs.playerrüstung["Beine"] )
+    print("Dein Aktueller Rüstungswert ist:", gs.playerrüstung["Helm"]+gs.playerrüstung["Brust"]+gs.playerrüstung["Beine"], "(",gs.playerrüstung["Helm"], "+", gs.playerrüstung["Brust"], "+", gs.playerrüstung["Beine"], ")" )
 
 
-def interaktion (Antworten,gs, diefrage):
-    userinput = input(diefrage)
-    if userinput in Antworten:
-        Antworten[userinput](gs)
-    else:
-        print("Fehler")
+
 
 def gameloop():
     gs = GameState("", 100, 20,{"mainhand":0,"offhand" :0},{"Helm":0, "Brust":0, "Beine":0})
@@ -46,8 +43,13 @@ def gameloop():
             print("Game Over")
             exit()
         interaktion(Antwortmöglichkeiten, gs, frage)
+
+
+
+
 print("Willkommen in der Welt von \"Bitte hier Name einfügen\". Es liegt an dir.")
 
 gameloop()
+#Lrvrl system
 
 
