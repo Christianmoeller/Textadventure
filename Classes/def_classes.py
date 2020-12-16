@@ -1,6 +1,7 @@
 import random
 import Classes.variablen
 import Classes.monster
+import Classes.levelsystem
 
 def interaktion (Antworten,gs, diefrage):
     inputnichtakzeptiert = True
@@ -18,12 +19,14 @@ def interaktion (Antworten,gs, diefrage):
         else:
             print("Fehler")
 class GameState:
-    def __init__(self, playername, playerhp, playerdmg, playerinventar, playerrüstung):
+    def __init__(self, playername, playerhp, playerdmg, playerinventar, playerrüstung, player_ep, benötigte_ep):
         self.playername = playername
         self.playerhp = playerhp
         self.playerdmg = playerdmg
         self.playerinventar = playerinventar
         self.playerrüstung = playerrüstung
+        self.player_ep = player_ep
+        self.benötigte_ep = benötigte_ep
 
 
 def schadenbrechenen (gamestate):#< schaden meiens spielers wird berechent und zurückgegeben
@@ -51,6 +54,7 @@ def welches_item_findest_du():#entweder waffe, pot, oderrüstung wird erstellt u
 
 def fight(gamestate):
     monster = Classes.monster.monsterwahl()
+    print("Ein", monster.Gattung, "steht vor dir.")
     while monster.HP > 0 and gamestate.playerhp > 0:
         if wurf(0,100)>50: #< liegt die zahl zwischen 80-100 trifft der gegner mich
             gamestate.playerhp = gamestate.playerhp-Classes.monster.monsterdmg_berechnung(gamestate, monster.Dmg)
@@ -61,10 +65,11 @@ def fight(gamestate):
             print("monster bekommt schaden")
     if monster.HP <= 0:
         print("Monster tot")
+        Classes.levelsystem.levelsystem(gamestate, monster)
         loot(gamestate)
     return gamestate
 def laufen(gs):
-    print("Du rennst wie eine kleine Muschi davon. Angsthase\n")
+    print("Du rennst wie eine kleine Mu**** davon. Angsthase\nDu kommst wieder an eine neue Kreuzung\n")
 
 
 def loot(gs):#<bekommt man loot?
@@ -127,3 +132,4 @@ def loot_rüstung(gs, object):
 def loot_potion(gs, object):
     Hp_pot(gs, object)
     return gs
+
