@@ -19,7 +19,7 @@ def interaktion (Antworten,gs, diefrage):
         else:
             print("Fehler")
 class GameState:
-    def __init__(self, playername, playerhp, playerdmg, playerinventar, playerrüstung, player_ep, benötigte_ep):
+    def __init__(self, playername, playerhp, playerdmg, playerinventar, playerrüstung, player_ep, benötigte_ep, monster):
         self.playername = playername
         self.playerhp = playerhp
         self.playerdmg = playerdmg
@@ -27,6 +27,7 @@ class GameState:
         self.playerrüstung = playerrüstung
         self.player_ep = player_ep
         self.benötigte_ep = benötigte_ep
+        self.monster = monster
 
 
 def schadenbrechenen (gamestate):#< schaden meiens spielers wird berechent und zurückgegeben
@@ -53,20 +54,19 @@ def welches_item_findest_du():#entweder waffe, pot, oderrüstung wird erstellt u
     return object# < ein object
 
 def fight(gamestate):
-    monster = Classes.monster.monsterwahl()
-    print("Ein", monster.Gattung, "steht vor dir.")
-    while monster.HP > 0 and gamestate.playerhp > 0:
+    while gamestate.monster.HP > 0 and gamestate.playerhp > 0:
         if wurf(0,100)>50: #< liegt die zahl zwischen 80-100 trifft der gegner mich
-            gamestate.playerhp = gamestate.playerhp-Classes.monster.monsterdmg_berechnung(gamestate, monster.Dmg)
+            gamestate.playerhp = gamestate.playerhp-Classes.monster.monsterdmg_berechnung(gamestate, gamestate.monster.Dmg)
             print("player bekommt schaden")
             print(gamestate.playerhp)
         else:
-            monster.HP = monster.HP-schadenbrechenen(gamestate)
+            gamestate.monster.HP = gamestate.monster.HP-schadenbrechenen(gamestate)
             print("monster bekommt schaden")
-    if monster.HP <= 0:
+    if gamestate.monster.HP <= 0:
         print("Monster tot")
-        Classes.levelsystem.levelsystem(gamestate, monster)
+        Classes.levelsystem.levelsystem(gamestate, gamestate.monster)
         loot(gamestate)
+        gamestate.monster = Classes.monster.monsterwahl()
     return gamestate
 def laufen(gs):
     print("Du rennst wie eine kleine Mu**** davon. Angsthase\nDu kommst wieder an eine neue Kreuzung\n")
@@ -132,4 +132,3 @@ def loot_rüstung(gs, object):
 def loot_potion(gs, object):
     Hp_pot(gs, object)
     return gs
-

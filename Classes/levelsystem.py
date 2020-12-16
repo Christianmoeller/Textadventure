@@ -12,4 +12,5 @@ def levelsystem(gs,monster):
         gs.playerdmg = gs.playerdmg + 10 # bei levelup wird der spieler dmg um 10 erhöt
         print("Dein Schaden wurde um 10 erhöt")
         gs.benötigte_ep = gs.benötigte_ep + 100
+
     return gs
