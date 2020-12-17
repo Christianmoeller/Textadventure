@@ -3,7 +3,7 @@ import Classes.monster
 
 def levelsystem(gs,monster):
     gs.player_ep = gs.player_ep + monster.monster_ep
-    print("du erhälst", monster.monster_ep, "EP")
+    print("Du erhälst", monster.monster_ep, "EP")
     if gs.player_ep >= gs.benötigte_ep:
         print("Level UP")
         gs.player_ep = gs.player_ep - gs.benötigte_ep

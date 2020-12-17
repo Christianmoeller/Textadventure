@@ -17,7 +17,7 @@ def monsterdmg_berechnung(spielerrüstung, monsterdmg):
 
 def monsterwahl():
     monsterLevelListen = [[monster for monster in all_monster() if monster.Level == lvl] for lvl in range(1,5)]
-    return random.choice(random.choices(monsterLevelListen, weights=(40,30,20,10), k=1)[0])
+    return random.choice(random.choices(monsterLevelListen, weights=(40,30,20,5), k=1)[0])
 
 def all_monster():
     Warg = Monster(25, "Warg", 20, 2, 15)
@@ -27,4 +27,11 @@ def all_monster():
     Orc = Monster(70, "Orc", 50, 4, 40)
     Junger_Scavenger = Monster(10, "junger Scavenger", 10, 1, 5)
     Scavenger = Monster(20, "Scavenger", 15, 1, 10)
-    return [Warg, Wolf, Oger, Orc, Junger_Scavenger, Scavenger, Mensch]
+    Bludhund = Monster(100, "Bluthund", 40, 4, 50)
+    Schwein = Monster(10, "Schwein", 1, 1, 10)
+    Bär = Monster(50, "Bär", 25, 3, 35)
+    Drache = Monster(100, "Drache", 100, 4, 80)
+    Schlange = Monster(25, "Schlange", 15, 2, 20)
+    Tarantel = Monster(10, "Tarantel", 25, 3, 25)
+
+    return [Warg, Wolf, Oger, Orc, Junger_Scavenger, Scavenger, Mensch, Bludhund, Schwein, Bär, Drache, Schlange, Tarantel]

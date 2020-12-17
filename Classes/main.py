@@ -1,10 +1,67 @@
 from Classes.def_classes import *
 from Classes.monster import *
+import json
+
+def richtungsantworten_begegnung():
+    a = "Ein rießiger Berg tut sich vor Dir auf. Du kannst eine Höle erkennen mit Monstern davor.\nSie scheinen Etwas zu bewachen. Eines der Monster nimmt dich wahr!\n"
+    b = "Es geht steil Bergab! Du rutscht aus und landest in mitten eines Nests.\nEines der Vicher nimmt dich wahr.\n"
+    c = "Du kommst an eine große Wiese voller Blumen und vielen Tieren. Wow was für ein schöner Ort.\nOh was ist das? Ein wildes Monster!\n"
+    d = "Es fängt an zu regnen. Du wirst nass und deine Klamotten fangen an zu stinken.\nDer Gruch lockt ein Monster an.\n"
+    e = "Du bist seit Tagen unterwegs. Du machst eine Pause und zündest ein Lagerfeuer an.\nDer Rauch lockt ein Monster an.\n"
+    f = "Dir ist unfassbar langweilig. Du singst und tanzt vor dich hin.\nUnachtsam rensnt du in ein Nest von Monstern.\nSofort greiffet dich eins an.\n"
+    liste = [a, b, c, d, e, f]
+    antwort = random.choice(liste)
+    return antwort
+
+def richtungsantworten_ohne_begegnung():
+    a = "Es ist ruhig, zu ruhig. Irgendwie verdächtig ruhig. Oh neue Kreuzung\n"
+    b = "Alles sieht wie immer gleich aus. Genau wie davor. Na klar noch eine Kreuzung --wer hätte das gedacht---\n"
+    c = "Fröhlich singst und tanzt du vor dich hin. Es ist so wunderbar friedlich.\nAus der Ferne siehst du eine neue Kreuzung\n"
+    d = "Völlig fertig machst du eine Pause. Du machst nur kurz die Augen zu.\nDu schläfst ein. Nach ein paar Stunden wachst du total erschrocken wieder auf.\nEs ist zwar dunkel geworden aber es geht dir gut.\n"
+    e = "Du holst dein Handy aus der Tasche. Kopfhörer rein und volle Lautstärke. Geiler Tag!!!!\n"
+    f = "Du kommst was um vor Hunger. Nichts in Richweite. Nicht mal ein Scavenger den du abschlachten könntest und grillen. Nope--Nichts.\n"
+    g = "Hmm\n"
+    liste = [a, b, c, d, e, f, g]
+    antwort = random.choice(liste)
+    return antwort
+
+def optionen(gs):
+    print("Vergiss es gibt keine optionen für dich du KEK\n")
+    fight(gs)
+
 def begegnung (gs):
-    antwortmöglichkeuten = {"kämpfen":fight, "laufen":laufen}
+    antwortmöglichkeuten = {"kämpfen":fight, "laufen":laufen, "optionen":optionen}
     print("Du kämpfst gegen:", gs.monster.Gattung)
-    frage = "Greifst Du es an oder läufst Du weg\n"
+    frage = "Greifst Du es an oder läufst Du weg?\n>>kämpfen<<, >>laufen<<, >>optionen<<"
     interaktion(antwortmöglichkeuten, gs, frage)
+
+def Save_game(gs):
+    f = open("Savegame.txt", "w")
+    f.write(gs.playername)
+    f.write(str(gs.playerhp))
+    f.write(str(gs.playerdmg))
+    f.write(str(gs.playerinventar))
+    f.write(str(gs.playerrüstung))
+    f.write(str(gs.player_ep))
+    f.write(str(gs.benötigte_ep))
+    f.close()
+
+
+def load_game(gs):
+    f = open("Savegame.txt", "r")
+    f.read(int(gs.playername))
+    f.read(int(gs.playerhp))
+    f.read(int(gs.playerdmg))
+    f.read(dict(gs.playerinventar))
+    f.read(dict(gs.playerrüstung))
+    f.read(int(gs.player_ep))
+    f.read(int(gs.benötigte_ep))
+    f.close()
+
+
+def ende(gs):
+    Save_game(gs)
+    exit()
 
 def ep(gs):
     print("Deine ep:", gs.player_ep)
@@ -14,32 +71,32 @@ def _help(gs):
     print("Willst Du deine Hp wissen? gebe \"hp\" ein\nWillst Du deinen Dmg wissen? Gebe \"dmg\" ein\nWillst Du eine Rüstung sehen? gebe \"rüstung\" ein\nWillst du deine Ep wissen? Gebe \"ep\" ein\n")
 def rechts(gs):
     if wurf(0, 51) > 25:
-        print("Ein rießiger Berg tut sich vor Dir auf. Du kannst eine Höle erkennen mit Monstern davor.\nSie scheinen Etwas zu bewachen. Eines der Monster nimmt dich wahr!")
+        print(richtungsantworten_begegnung())
         begegnung(gs)
     else :
-        print("Der Weg ist steinig und schwer. Neue Kreuzung! \n")
+        print(richtungsantworten_ohne_begegnung())
 
 
 def links (gs):
     if wurf(0, 51) > 25:
-        print("Es geht steil Bergab! Du rutscht aus und landest mitten in einem Nests.\nEines der Ficher nimmt dich whar.")
+        print(richtungsantworten_begegnung())
         begegnung(gs)
     else :
-        print("Der Weg ist steinig und schwer. Neue Kreuzung! \n")
+        print(richtungsantworten_ohne_begegnung())
 
 def vor (gs):
     if wurf(0, 51) > 25:
-        print("Du kommst an eine große Wiese voller Blumen und vielen Tieren. Wow was für ein schöner Ort.\nOh was ist das? Ein wildes Tier!")
+        print(richtungsantworten_begegnung())
         begegnung(gs)
     else :
-        print("Der Weg ist steinig und schwer. Neue Kreuzung! \n")
+        print(richtungsantworten_ohne_begegnung())
 
 def zurück(gs):
     if wurf(0, 51) > 25:
         print("Du gehst zurück wo du hergekommen bist.\nDummerweise ist Dir ein Monster gefolgt und stehst jetzt direkt vor Dir!")
         begegnung(gs)
     else :
-        print("Der Weg ist steinig und schwer. Neue Kreuzung! \n")
+        print(richtungsantworten_ohne_begegnung())
 
 def hp_abfrage(gs):
     print("Deine Hp betragen:", gs.playerhp,"\n")
@@ -47,17 +104,17 @@ def dmg_abfrage(gs):
     print("Dein Aktueller Schaden beträgt:",gs.playerdmg+gs.playerinventar["mainhand"]+gs.playerinventar["offhand"])
 def rüstung_abfrage(gs):
     print("Helm",gs.playerrüstung["Helm"],"Brust",gs.playerrüstung["Brust"], "Beine", gs.playerrüstung["Beine"] )
-    print("Dein Aktueller Rüstungswert ist:", gs.playerrüstung["Helm"]+gs.playerrüstung["Brust"]+gs.playerrüstung["Beine"], "(",gs.playerrüstung["Helm"], "+", gs.playerrüstung["Brust"], "+", gs.playerrüstung["Beine"], ")" )
+    print("Dein Aktueller Rüstungswert ist:", gs.playerrüstung["Helm"]+gs.playerrüstung["Brust"]+gs.playerrüstung["Beine"])
 
 
 
 def gameloop():
     gs = GameState("", 100, 20,{"mainhand":0,"offhand" :0},{"Helm":0, "Brust":0, "Beine":0}, 0, 100, monsterwahl())
     gs.playername    = input("Wie lautet dein Name?\n")
-    print("Was für ein Sch**** Name...", gs.playername + "...Pff"+"\nNaja egal. Was wirst du tun?")
+    print("Was für ein Sch**** Name...", gs.playername + "...Pff"+"\nNaja egal.")
     Lebendig = True
     frage = "Welche Richtung gehst du?\n>>help<< für mehr Optionen\n"
-    Antwortmöglichkeiten = {"rechts": rechts, "links": links, "vor": vor, "zurück": zurück, "hp": hp_abfrage, "dmg": dmg_abfrage, "rüstung": rüstung_abfrage, "help": _help, "ep":ep}
+    Antwortmöglichkeiten = {"rechts": rechts, "links": links, "vor": vor, "zurück": zurück, "hp": hp_abfrage, "dmg": dmg_abfrage, "rüstung": rüstung_abfrage, "help": _help, "ep":ep, "ende":ende, "laden":load_game}
     while Lebendig == True:
         if gs.playerhp <= 0:
             Lebendig = False
@@ -68,7 +125,16 @@ def gameloop():
 
 
 
-print("Willkommen in der Welt von \"Bitte hier Name einfügen\".\nDu bist also der Held von dem noch nie jemand gehört hat?")
+print("Willkommen in der Welt von \"F-T-A-P-I\".\nDu bist also der Held von dem noch nie jemand gehört hat?\nDeine Reise beginnt.")
 
 gameloop()
-#Lrvrl system
+
+#TODO
+# save and load file .mehr info über das kampfsyste.
+# neue riuchungen ohne begegnung
+# inventar iwann zum auswählen   sprich menn man n pot findet wird der in eine tasche gepackt und man kann bei bedarf den pot nehmen
+# kampfsystem überarbeiten  rudnenbasiert    kein autokampf mehr
+# flucht erschweren  durch rätzel
+# "wenn möglich" wärend des kampfes die mögichkeit pot zu nehmen bzw die help funktion zu benutzen
+# lootverteilung
+#

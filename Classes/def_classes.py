@@ -6,16 +6,10 @@ import Classes.levelsystem
 def interaktion (Antworten,gs, diefrage):
     inputnichtakzeptiert = True
     while inputnichtakzeptiert:
-        userinput = input(diefrage)
-
+        userinput = input(diefrage).lower()
         if userinput in Antworten:
-            #if type(Antworten[userinput]) == str:
-                #print(Antworten[userinput])
-            #elif callable(Antworten[userinput]):
             Antworten[userinput](gs)
             inputnichtakzeptiert = False
-            #else:
-             #   print("ungiltiger type")
         else:
             print("Fehler")
 class GameState:
@@ -48,20 +42,26 @@ def Hp_pot(gamestate, potion):
     return gamestate
 
 def welches_item_findest_du():#entweder waffe, pot, oderrüstung wird erstellt und zurückgegeben
-    randomizeliste = [Classes.variablen.Waffenliste, Classes.variablen.Potionliste, Classes.variablen.Rüstungsliste]
+    randomizeliste = [Classes.variablen.Waffenliste, Classes.variablen.Potionliste]# , Classes.variablen.Rüstungwahl()
     ausgewählteliste = random.choice(randomizeliste)
     object = random.choice(ausgewählteliste)
-    return object# < ein object
+    object1 = [object, Classes.variablen.Rüstungwahl()]
+    return random.choice(object1)# < ein object
 
 def fight(gamestate):
-    while gamestate.monster.HP > 0 and gamestate.playerhp > 0:
-        if wurf(0,100)>50: #< liegt die zahl zwischen 80-100 trifft der gegner mich
-            gamestate.playerhp = gamestate.playerhp-Classes.monster.monsterdmg_berechnung(gamestate, gamestate.monster.Dmg)
-            print("player bekommt schaden")
-            print(gamestate.playerhp)
-        else:
-            gamestate.monster.HP = gamestate.monster.HP-schadenbrechenen(gamestate)
-            print("monster bekommt schaden")
+    infight = True
+    while gamestate.monster.HP > 0 and gamestate.playerhp > 0 and infight == True:
+        userinput = input("Weiter!?")
+        if userinput == "ja":
+            if wurf(0,100)>50: #< liegt die zahl zwischen 80-100 trifft der gegner mich
+                gamestate.playerhp = gamestate.playerhp-Classes.monster.monsterdmg_berechnung(gamestate, gamestate.monster.Dmg)
+                print("Du bekommst auf die Fresse. Du hast noch:", gamestate.playerhp, "Hp")
+            else:
+                gamestate.monster.HP = gamestate.monster.HP-schadenbrechenen(gamestate)
+                print("Du gibst dem Monster eine mit.\nMonster hat noch:", gamestate.monster.HP, "HP")
+        elif userinput == "nein":
+            laufen(gamestate)
+            infight = False
     if gamestate.monster.HP <= 0:
         print("Monster tot")
         Classes.levelsystem.levelsystem(gamestate, gamestate.monster)
@@ -70,6 +70,8 @@ def fight(gamestate):
     return gamestate
 def laufen(gs):
     print("Du rennst wie eine kleine Mu**** davon. Angsthase\nDu kommst wieder an eine neue Kreuzung\n")
+    gs.monster = Classes.monster.monsterwahl()
+    return gs
 
 
 def loot(gs):#<bekommt man loot?
@@ -79,7 +81,6 @@ def loot(gs):#<bekommt man loot?
             print("Du hast ein", gefundenes_item.Name, "gefunden.\n")
             loot_waffe(gs, gefundenes_item)
         elif type(gefundenes_item) == Classes.variablen.Armor:
-            print("Rüstung")
             loot_rüstung(gs, gefundenes_item)
         elif type(gefundenes_item) == Classes.variablen.Potion:
             print("potion")
@@ -107,25 +108,24 @@ def waffe_tauschen(gs, object):
         if antwort == "mainhand":
             gs.playerinventar["mainhand"] = object.Dmg
             print("Deine Mainhand wurde ersetzt durch:", object.Name)
+            print("Das andere Schwert hast du weggeworfen als hätte es keinen Wert.\nNie wieder wird es jemanden wie dich finden. Villeicht ist das auch gut so. Ar***lo**")
         if antwort == "offhand":
             gs.playerinventar["offhand"] = object.Dmg
             print("Deine Offhand wurde ersetzt durch:", object.Name)
     else:
-        print("Du wirfst die Waffe einfach weg. Du Herzloses Stück S***")
-
-
-def waffe_tauschen_2():
-    #interaktion(Antworten={"ja":})
-    pass
+        print("Du wirfst die Waffe einfach weg. Du herzloses Stück S***.\nDas Ding liegt jetzt für immer da und vergammelt. Hoffentlich fühlst du dich schelcht")
 
 def loot_rüstung(gs, object):
     if object.Slot == "Helm":
+        print(object.Name)
         gs.playerrüstung["Helm"] = object.Wert
         print("Dein Helmrüstungswert hat sich erhöt")
     elif object.Slot == "Brust":
+        print(object.Name)
         gs.playerrüstung["Brust"] = object.Wert
         print("Dein Brustrüstungswert hat sich erhöt")
     elif object.Slot == "Beine":
+        print(object.Name)
         gs.playerrüstung["Beine"] = object.Wert
         print("Deine Beinrüstungswert hat sich erhöt")
     return gs

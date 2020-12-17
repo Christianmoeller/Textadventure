@@ -1,0 +1,1 @@
+peter10020{'mainhand': 0, 'offhand': 0}{'Helm': 0, 'Brust': 0, 'Beine': 0}0100
