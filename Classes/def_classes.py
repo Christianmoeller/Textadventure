@@ -2,6 +2,8 @@ import random
 import Classes.variablen
 import Classes.monster
 import Classes.levelsystem
+from json import JSONEncoder
+from json import JSONDecoder
 
 def interaktion (Antworten,gs, diefrage):
     inputnichtakzeptiert = True
@@ -12,6 +14,18 @@ def interaktion (Antworten,gs, diefrage):
             inputnichtakzeptiert = False
         else:
             print("Fehler")
+
+class GameStateEncoder(JSONEncoder):
+    def default(self, o):
+        print(vars(o))
+        return vars(o)
+
+class GameStateDecoder(JSONDecoder):
+    def default(self, o):
+        print(vars(o))
+        return vars(o)
+
+
 class GameState:
     def __init__(self, playername, playerhp, playerdmg, playerinventar, playerrüstung, player_ep, benötigte_ep, monster):
         self.playername = playername

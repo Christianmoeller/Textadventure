@@ -2,6 +2,10 @@ from Classes.def_classes import *
 from Classes.monster import *
 import json
 
+
+
+
+
 def richtungsantworten_begegnung():
     a = "Ein rießiger Berg tut sich vor Dir auf. Du kannst eine Höle erkennen mit Monstern davor.\nSie scheinen Etwas zu bewachen. Eines der Monster nimmt dich wahr!\n"
     b = "Es geht steil Bergab! Du rutscht aus und landest in mitten eines Nests.\nEines der Vicher nimmt dich wahr.\n"
@@ -30,38 +34,21 @@ def optionen(gs):
     fight(gs)
 
 def begegnung (gs):
-    antwortmöglichkeuten = {"kämpfen":fight, "laufen":laufen, "optionen":optionen}
+    antwortmöglichkeiten = {"kämpfen":fight, "laufen":laufen, "optionen":optionen}
     print("Du kämpfst gegen:", gs.monster.Gattung)
     frage = "Greifst Du es an oder läufst Du weg?\n>>kämpfen<<, >>laufen<<, >>optionen<<"
-    interaktion(antwortmöglichkeuten, gs, frage)
+    interaktion(antwortmöglichkeiten, gs, frage)
 
-def Save_game(gs):
-    f = open("Savegame.txt", "w")
-    f.write(gs.playername)
-    f.write(str(gs.playerhp))
-    f.write(str(gs.playerdmg))
-    f.write(str(gs.playerinventar))
-    f.write(str(gs.playerrüstung))
-    f.write(str(gs.player_ep))
-    f.write(str(gs.benötigte_ep))
-    f.close()
-
-
+def save_game(gs):
+    file = open("save_game.txt", "w")
+    x = json.dumps(gs, cls=GameStateEncoder)
+    print(type(x))
+    file.write(x)
 def load_game(gs):
-    f = open("Savegame.txt", "r")
-    f.read(int(gs.playername))
-    f.read(int(gs.playerhp))
-    f.read(int(gs.playerdmg))
-    f.read(dict(gs.playerinventar))
-    f.read(dict(gs.playerrüstung))
-    f.read(int(gs.player_ep))
-    f.read(int(gs.benötigte_ep))
-    f.close()
+    file = open("save_game.txt", "r")
+    x = json.loads(file)
+    file.read(x)
 
-
-def ende(gs):
-    Save_game(gs)
-    exit()
 
 def ep(gs):
     print("Deine ep:", gs.player_ep)
@@ -114,7 +101,7 @@ def gameloop():
     print("Was für ein Sch**** Name...", gs.playername + "...Pff"+"\nNaja egal.")
     Lebendig = True
     frage = "Welche Richtung gehst du?\n>>help<< für mehr Optionen\n"
-    Antwortmöglichkeiten = {"rechts": rechts, "links": links, "vor": vor, "zurück": zurück, "hp": hp_abfrage, "dmg": dmg_abfrage, "rüstung": rüstung_abfrage, "help": _help, "ep":ep, "ende":ende, "laden":load_game}
+    Antwortmöglichkeiten = {"rechts": rechts, "links": links, "vor": vor, "zurück": zurück, "hp": hp_abfrage, "dmg": dmg_abfrage, "rüstung": rüstung_abfrage, "help": _help, "ep":ep, "save":save_game, "laden":load_game}
     while Lebendig == True:
         if gs.playerhp <= 0:
             Lebendig = False
@@ -137,4 +124,4 @@ gameloop()
 # flucht erschweren  durch rätzel
 # "wenn möglich" wärend des kampfes die mögichkeit pot zu nehmen bzw die help funktion zu benutzen
 # lootverteilung
-#
+# Ziel einfügen
