@@ -2,10 +2,6 @@ from Classes.def_classes import *
 from Classes.monster import *
 import json
 
-
-
-
-
 def richtungsantworten_begegnung():
     a = "Ein rießiger Berg tut sich vor Dir auf. Du kannst eine Höle erkennen mit Monstern davor.\nSie scheinen Etwas zu bewachen. Eines der Monster nimmt dich wahr!\n"
     b = "Es geht steil Bergab! Du rutscht aus und landest in mitten eines Nests.\nEines der Vicher nimmt dich wahr.\n"
@@ -44,11 +40,21 @@ def save_game(gs):
     x = json.dumps(gs, cls=GameStateEncoder)
     print(type(x))
     file.write(x)
+
 def load_game(gs):
     file = open("save_game.txt", "r")
-    x = json.loads(file)
-    file.read(x)
-
+    data = file.readlines()[0]
+    dict_obj = json.loads(data)
+    ms = dict_obj["monster"]
+    MS = Monster(ms["HP"], ms["Gattung"], ms["Dmg"], ms["Level"], ms["monster_ep"])
+    gs.playername = dict_obj["playername"]
+    gs.playerhp = dict_obj["playerhp"]
+    gs.playerdmg = dict_obj["playerdmg"]
+    gs.playerinventar = dict_obj["playerinventar"]
+    gs.playerrüstung = dict_obj["playerrüstung"]
+    gs.player_ep = dict_obj["player_ep"]
+    gs.benötigte_ep = dict_obj["benötigte_ep"]
+    gs.monster = MS
 
 def ep(gs):
     print("Deine ep:", gs.player_ep)

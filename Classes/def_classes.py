@@ -56,7 +56,7 @@ def Hp_pot(gamestate, potion):
     return gamestate
 
 def welches_item_findest_du():#entweder waffe, pot, oderrüstung wird erstellt und zurückgegeben
-    randomizeliste = [Classes.variablen.Waffenliste, Classes.variablen.Potionliste]# , Classes.variablen.Rüstungwahl()
+    randomizeliste = [Classes.variablen.Waffenliste, Classes.variablen.Potionliste]
     ausgewählteliste = random.choice(randomizeliste)
     object = random.choice(ausgewählteliste)
     object1 = [object, Classes.variablen.Rüstungwahl()]

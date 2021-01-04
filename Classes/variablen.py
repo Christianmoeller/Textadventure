@@ -37,14 +37,6 @@ class Armor(Items):
         self.Art = Art
         self.Slot = Slot
         self.Rar = Rar
-#Items die den schaden der gegner verringern
-#Brustplatte = Armor(20,"Brustplatte", "Rüstung", "Brust", 1)
-#Helm = Armor(5, "Helm", "Rüstung", "Helm", 1)
-#Hose = Armor(10, "Hose", "Rüstung", "Beine", 1)
-#Rüstungsliste = [Brustplatte, Helm, Hose]
-
-
-
 
 def Rüstungwahl():
     ArmorRarListen = [[armor for armor in allArmor() if armor.Rar == lvl] for lvl in range(1, 4)]

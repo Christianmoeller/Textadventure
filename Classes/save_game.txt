@@ -1,0 +1,1 @@
+{"playername": "hallihallo", "playerhp": 100, "playerdmg": 20, "playerinventar": {"mainhand": 50, "offhand": 0}, "playerr\u00fcstung": {"Helm": 0, "Brust": 0, "Beine": 0}, "player_ep": 5, "ben\u00f6tigte_ep": 100, "monster": {"HP": 100, "Dmg": 100, "Gattung": "Drache", "Level": 4, "monster_ep": 80}}
