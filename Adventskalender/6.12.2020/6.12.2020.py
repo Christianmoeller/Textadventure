@@ -19,16 +19,22 @@ for i in f:
     gruppe2.append(i)
 #print(gruppe2)
 
+var = 0
+
+for m in f:
+    eins = m.split(",")
+    print(eins)
+    eins = set(m)
+    print(m)
+    print(eins)
+    var += 1
+
+
+
 
 
 x = set(gruppe2[0][0])
 y = set(gruppe2[0][1])
-
-z = x & y
-
-
-
-print(z)
 
 
 
@@ -45,3 +51,4 @@ print(z)
 
 
 # indersection
+#pro gruppe
