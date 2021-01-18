@@ -103,7 +103,7 @@ def rüstung_abfrage(gs):
 
 def gameloop():
     gs = GameState("", 100, 20,{"mainhand":0,"offhand" :0},{"Helm":0, "Brust":0, "Beine":0}, 0, 100, monsterwahl())
-    gs.playername    = input("Wie lautet dein Name?\n")
+    gs.playername = input("Wie lautet dein Name?\n")
     print("Was für ein Sch**** Name...", gs.playername + "...Pff"+"\nNaja egal.")
     Lebendig = True
     frage = "Welche Richtung gehst du?\n>>help<< für mehr Optionen\n"
