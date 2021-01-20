@@ -11,17 +11,18 @@ def travel(gs):
 def fight(gs):
     gs.infight = True
     pokomon_to_fight = PokemonClass.choose_pokemon()
-
-    print("Du kämpfst gegen:",pokomon_to_fight.Name, "Lvl:", pokomon_to_fight.Level)
+    print("\nDu betritts die Arena und da steht schon ein Pokemon bereit für dich.")
+    print("Es ist ein Wildes:",pokomon_to_fight.Name, "Lvl:", pokomon_to_fight.Level)
     print("Seine Hp", pokomon_to_fight.Hp_Current)
-    print("Was wirst du tun?")
+    print("Was wirst du tun?\n")
     while gs.infight:
-        answers = {"a": dmg_calculator, "b": pokemon_change}
-        user_input = input("A:Kämpfen\nB:Pokemon wechseln\nC:Pokemonstats\nD:Laufen\n>")
+        print(">>>Kampfmenü<<<")
+        answers = {"a": dmg_calculator, "b": pokemon_change, "c":pokemon_stats}
+        user_input = input("A:Kämpfen\nB:Pokemon wechseln (nicht verfügbar)\nC:Pokemonstats\nD:Laufen\n>")
         if user_input in answers:
             answers[user_input[0]](gs, pokomon_to_fight)
         elif user_input == "d":
-            print("Du bist entkommen!")
+            print("Du bist entkommen!\n")
             gs.infight = False
         else :
             print("Irgendwas musst du ja machen also sag an!")
@@ -33,12 +34,27 @@ def current_hp(gs, Pokemon_to_fight):
 def defeat_ep_calculation(pokemon_to_fight):
     return pokemon_to_fight.Ep_at_defeated_level1+(pokemon_to_fight.Ep_at_defeated_level1*0.1)
 
+def pokemon_stats(gs, pokemon_to_fight):
+    print(">>>Statsmenü<<<")
+    print("Was genau willst du den wissen?")
+    answers = input("A: Pokemon Hp?\nB: Pokemon Level?\nC: Benötigte Ep zum Levelup?\nD: Zurück\n>")
+    if answers == "a":
+        print("Dein", gs.current_pokemon.Name, "Hat noch:", gs.current_pokemon.Hp_Current, "/",gs.current_pokemon.Hp_Max)
+    elif answers == "b":
+        print("Dein",gs.current_pokemon.Name ,"ist Level:", gs.current_pokemon.Level)
+    elif answers == "c":
+        print("Benötigte ep zum Levelup:", (gs.current_pokemon.Needed_ep-gs.current_pokemon.Current_ep))
+    elif answers == "d":
+        return
+    else:
+        print("Zurück")
+        return
 
 def dmg_calculator(gs, pokemon_to_fight):
     sucess = random.randrange(0,100)
     if sucess >= 10:
         pokemon_to_fight.Hp_Current = pokemon_to_fight.Hp_Current-gs.current_pokemon.Dmg
-        print("Du hast dem Gegner Schaden gemacht. Es hat noch:", pokemon_to_fight.Hp_Current, "HP")
+        print("Du hast", pokemon_to_fight.Name,gs.current_pokemon.Dmg,"Schaden gemacht.", pokemon_to_fight.Name,"hat noch:", pokemon_to_fight.Hp_Current, "HP")
         if pokemon_to_fight.Hp_Current <=0:
             print("du hast das Pokemon besiegt.")
             loot(gs, pokemon_to_fight)
@@ -59,25 +75,22 @@ def run(gs ,pokemon_to_fight):
 
 def loot(gs, pokemon_to_fight):
     #abhängig von der stärke des pokemons das man besiegt hat soll man mehr geld bekommen
-    gs.money = gs.money+(pokemon_to_fight.Level+2)
+    gs.money = gs.money+pokemon_to_fight.Level
 
 def level_up_stats(gs):
-    gs.current_pokemon.Hp_Max = gs.current_pokemon.Hp_Max +50
+    gs.current_pokemon.Hp_Max = gs.current_pokemon.Hp_Max +25
     gs.current_pokemon.Hp_Current += 10
 
 def self_level_calcultion(gs, pokemon_to_fight):
     get_ep = gs.current_pokemon.Current_ep+pokemon_to_fight.Ep_to_give
-    print("Aktuelle Ep:",gs.current_pokemon.Current_ep, "Bekommene Ep:", get_ep)
+    print("Erhaltene Ep:", get_ep)
     gs.current_pokemon.Current_ep = gs.current_pokemon.Current_ep+get_ep
-    print("Neuer Ep Stand:", gs.current_pokemon.Current_ep)
-
-#berechnung wenn die bekommenen ep mehrmals zum level up führen   also  while schliefe  abbruch bedingung bekommene ep nciht teilbar durch bruchende ep
     if gs.current_pokemon.Current_ep >= gs.current_pokemon.Needed_ep:
         while gs.current_pokemon.Current_ep >= gs.current_pokemon.Needed_ep:
-            print("Dein Pokemon", gs.current_pokemon.Name, "ist um ein Level aufgestiegen.")
             gs.current_pokemon.Level += 1
+            print("Dein",gs.current_pokemon.Name,"ist nun level:", gs.current_pokemon.Level)
             level_up_stats(gs)
-            print("Es ist jetzt Lvl:", gs.current_pokemon.Level)
+            print("Seine Max Hp sind um 25 gestiegen.\nSeine Aktuellen Hp sind um 10 erhöt\n")
             gs.current_pokemon.Current_ep = gs.current_pokemon.Current_ep-gs.current_pokemon.Needed_ep
             gs.current_pokemon.Needed_ep = gs.current_pokemon.Needed_ep + 150
 
@@ -120,14 +133,16 @@ def load(gs):
     print("\nDiese Funktion ist noch nicht vorhanden!")
 
 def money(gs):
-    print("Aktueller Kontostand:", gs.money)
+    print("Aktueller Kontostand:", gs.money, "€\n")
 
 def pokecenter(gs):
-    heal_notheal = input("Möchten sie ihr Pokemon Heilen?\n>")
+    heal_notheal = input("Schwester Joy: \"Sollen wir uns um Ihr Pokemon kümmern?\"\n>")
     if heal_notheal == "ja":
         gs.current_pokemon.Hp_Current = gs.current_pokemon.Hp_Max
+        print("Musik...")
+        print("Schwester Joy:\"Deinem Pokemon geht es wieder gut. Beehren sie uns bald wieder!\"")
     elif heal_notheal == "nein":
-        print("Okay. Beehren sie uns bald wieder!")
+        print("Schester Joy:\"Okay. Beehren sie uns bald wieder!\"")
     else:
         return
 

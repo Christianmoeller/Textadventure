@@ -3,23 +3,27 @@ def startpokemon(choosen):
     done = True
     while done:
         if choosen.lower() == "schiggy" or choosen.lower() == "wasser":
-            print("Hey du hast dich für Schiggy entschieden.\nMit Sicherheit eine gute Wahl.\n")
+            print("Prof. Acai: \"Beeindruckend! Du hast dich für Schiggy entschieden. Das WASSER-Pokemon.\"\n\"Was DAS zu bedeuten hat, musst du selber herausfinden.\"\n")
             done = False
             Schiggy = PokemonClass("Schiggy", "Wasser", 50, 50, 10, 1, 0, 100, 50)
             return Schiggy
 
         elif choosen.lower() == "glumanda" or choosen.lower() == "feuer":
-            print("Sehr schön. Du hast dich für Glumanda entschieden.\nMit Sicherheit eine gute Wahl.\n")
+            print("Prof. Acai: \"Sehr schön! Du hast dich für Glumanda entschieden. Das FEUER-Pokemon.\"\n\"Was DAS zu bedeuten hat, musst du selber herausfinden.\"\n")
             done = False
             Glumanda = PokemonClass("Glumanda", "Feuer", 50, 50, 10, 1, 0, 100, 50)
             return Glumanda
 
         elif choosen.lower() == "bisasam" or choosen.lower() == "pflanze":
-            print("Du hast dich für Bisasam entschieden.\nMit Sicherheit eine gute Wahl. Du hast wohl keine Ahnung von Pokomen!\n")
+            print("Prof. Acai: \"Yeah! Du hast dich für Bisasam entschieden. Das PFLANZEN-Pokemon.\"\n\"Was DAS zu bedeuten hat, musst du selber herausfinden.\"\n")
             done = False
             Bisasam = PokemonClass("Bisasam", "Pflanze", 50, 50, 10, 1, 0, 100, 50)
             return Bisasam
-
+        elif choosen.lower() == "pikatchu":
+            print("Prof. Acai: \"Ähm ja das Pokemon da drüben ist ein Pikatchu. Aber es ist nicht gut auf Menschen zu sprechen!\"\n...\n\"Was du bist kein Mensch und du willst es umbedingt haben?\"\n\"Nagut das Herz will was das Herz will.\"\n\"Es ist ein ELEKTO-Pokemon. Was DAS bedeutet musst du selber herausfinden.\"\n")
+            done = False
+            Pikatchu = PokemonClass("Pikatchu", "Elecktro", 60, 60, 15, 1, 0, 100, 50)
+            return Pikatchu
         else:
             choosen =input("Du musst ein verfügbares Pokemon auswählen\n")
 
