@@ -130,13 +130,13 @@ def inventar(gs):
 def stats(gs):
     print("Was genau möchten sie Wissen?")
     answer = input("A: Pokemon HP?\nB: Pokemon Level?\nC: Benötigte Ep zum Levelup?\nD: Zurück\n>")
-    if answer == "a":
+    if answer.lower() == "a":
         print("Dein", gs.current_pokemon.Name, "Hat noch:", gs.current_pokemon.Hp_Current, "/",gs.current_pokemon.Hp_Max)
-    elif answer == "b":
+    elif answer.lower() == "b":
         print("Dein",gs.current_pokemon.Name ,"ist Level:", gs.current_pokemon.Level)
-    elif answer == "c":
+    elif answer.lower() == "c":
         print("Benötigte ep zum Levelup:", (gs.current_pokemon.Needed_ep-gs.current_pokemon.Current_ep))
-    elif answer == "d":
+    elif answer.lower() == "d":
         return
     else:
         print("Zurück")
