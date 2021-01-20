@@ -30,20 +30,6 @@ def fight(gs):
             print("Irgendwas musst du ja machen also sag an!")
 
 
-        """answers = {"a": dmg_calculator, "b": pokemon_change, "c":pokemon_stats}
-        user_input = input("A:Kämpfen\nB:Pokemon wechseln (nicht verfügbar)\nC:Pokemonstats\nD:Laufen\n>")
-        if user_input in answers:
-            answers[user_input[0]](gs, pokomon_to_fight)
-        elif user_input == "d":
-            print("Du bist entkommen!\n")
-            gs.infight = False
-        elif user_input == "test":
-            attackenmenu(gs)
-
-        else :
-            print("Irgendwas musst du ja machen also sag an!")"""
-
-
 def current_hp(gs, Pokemon_to_fight):
     print("Dein Pokemon hat noch", gs.current_pokemon.Hp, "Hp.")
 
