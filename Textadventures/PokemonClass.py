@@ -20,7 +20,7 @@ def startpokemon(choosen):
             done = False
             Bisasam = PokemonClass("Bisasam", "Pflanze", 50, 50, 10, 1, 0, 100, 50, [Attack_list.Tackle, Attack_list.Scratch])
             return Bisasam
-        elif choosen.lower() == "pikatchu":
+        elif choosen.lower() == "pikatchu" or choosen.lower() == "elecktro":
             print("Prof. Acai: \"Ähm ja das Pokemon da drüben ist ein Pikatchu. Aber es ist nicht gut auf Menschen zu sprechen!\"\n...\n\"Was du bist kein Mensch und du willst es umbedingt haben?\"\n\"Nagut das Herz will was das Herz will.\"\n\"Es ist ein ELEKTO-Pokemon. Was DAS bedeutet musst du selber herausfinden.\"\n")
             done = False
             Pikatchu = PokemonClass("Pikatchu", "Elecktro", 60, 60, 15, 1, 0, 100, 50, [Attack_list.Tackle, Attack_list.Thunder_Bolt])
@@ -50,9 +50,9 @@ class PokemonClass:
 
 
 def fire_pokemon():
-    Glumanda =  PokemonClass("Glumanda", "Feuer", 50, 50, 10, 1, 0, 100, 50, [Attack_list.Tackle, Attack_list.Ember])
-    Glutexo = PokemonClass("Glutexo", "Feuer", 75, 75, 20, 15, 0, 15000, 100, [Attack_list.Tackle, Attack_list.Bite, Attack_list.Ember])
-    Glurak = PokemonClass("Glurak", "Feuer", 100, 100, 40, 36, 0, 40000, 1000, [Attack_list.Tackle, Attack_list.Bite, Attack_list.Ember, Attack_list.Flame_Thrower])
+    Glumanda =  PokemonClass("Glumanda", "Feuer", 50, 50, 10, 1, 0, 100, 50, [Attack_list.Scratch, Attack_list.Ember])
+    Glutexo = PokemonClass("Glutexo", "Feuer", 75, 75, 20, 15, 0, 15000, 100, [Attack_list.Scratch, Attack_list.Bite, Attack_list.Ember])
+    Glurak = PokemonClass("Glurak", "Feuer", 100, 100, 40, 36, 0, 40000, 1000, [Attack_list.Scratch, Attack_list.Bite, Attack_list.Ember, Attack_list.Flame_Thrower])
     Fukano = PokemonClass("Fukano", "Feuer", 50, 50, 12, 1, 0, 100, 70, [Attack_list.Tackle, Attack_list.Bite, Attack_list.Ember])
     Arkani = PokemonClass("Arkani", "Feuer", 75, 75,  30, 20, 0, 15000, 150, [Attack_list.Tackle, Attack_list.Bite, Attack_list.Ember, Attack_list.Flame_Thrower])
     Vulpix = PokemonClass("Vulpix", "Feuer", 50, 50, 12, 1, 0, 100, 70, [Attack_list.Tackle, Attack_list.Bite, Attack_list.Ember])
