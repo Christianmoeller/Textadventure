@@ -11,6 +11,7 @@ def travel(gs):
     #erlaubt es dir in andere städte zu reisen da es dort andere shops gibt und amit andere items zum kaufen
 
 def fight(gs):
+    clear_screen()
     gs.infight = True
     pokomon_to_fight = PokemonClass.choose_pokemon()
     print("\nDu betritts die Arena und da steht schon ein Pokemon bereit für dich.")
@@ -42,7 +43,7 @@ def attackenmenu(gs):
     print("Diese Attacken besitzt", gs.current_pokemon.Name)
     zahl = 1
     for Attak in gs.current_pokemon.Attacklist:
-        print(zahl, Attak.Name, "noch:", Attak.Attack_Counter_Current, "übrig.")
+        print(zahl, Attak.Name, "Schaden:", Attak.Dmg, "Noch:", Attak.Attack_Counter_Current, "übrig.")
         zahl += 1
     int_answer = 0
     while not (int_answer >0 and int_answer <= len(gs.current_pokemon.Attacklist)):
@@ -172,6 +173,15 @@ def pokecenter(gs):
         print("Schester Joy:\"Okay. Beehren sie uns bald wieder!\"\n")
     else:
         return
+
+def clear_screen():
+    condition = 0
+    while condition <20:
+        print()
+        condition += 1
+
+
+
 
 
 new_Commands = {
