@@ -4,4 +4,5 @@ def catch_pokemon(gs, pokemon_to_fight):
     else:
         gs.pokemon_list.append(pokemon_to_fight)
         print("Du hast", pokemon_to_fight.Name, "gefangen!\nGlückwunsch")
-        return
+        gs.infight = False
+        return gs.infight

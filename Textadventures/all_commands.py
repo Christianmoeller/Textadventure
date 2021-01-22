@@ -19,7 +19,7 @@ def fight(gs):
     print("Was wirst du tun?\n")
     while gs.infight:
         print(">>>Kampfmenü<<<\n")
-        user_input = input("A:Kämpfen\nB:Pokemon wechseln (nicht verfügbar)\nC:Pokemonstats\nD:Laufen\nE:Pokemon Fangen\n>")
+        user_input = input("A:Kämpfen\nB:Pokemon wechseln\nC:Pokemonstats\nD:Laufen\nE:Pokemon Fangen\n>")
         if user_input.lower() == "a":
             dmg_calculator(gs, pokomon_to_fight, attackenmenu(gs))
         elif user_input.lower() == "b":
@@ -32,9 +32,6 @@ def fight(gs):
             catch_pokemon.catch_pokemon(gs, pokomon_to_fight)
         else :
             print("Irgendwas musst du ja machen also sag an!")
-
-
-
 
 
 def current_hp(gs, Pokemon_to_fight):
@@ -145,7 +142,7 @@ def stats(gs):
     elif answer.lower() == "c":
         print("Benötigte ep zum Levelup:", (gs.current_pokemon.Needed_ep-gs.current_pokemon.Current_ep))
     elif answer.lower() == "d":
-        print("1Dein Aktuelles Pokemon ist:", gs.current_pokemon.Name)
+        print("Dein Aktuelles Pokemon ist:", gs.current_pokemon.Name)
         list_all_pokemon(gs)
     else:
         print("Zurück")
