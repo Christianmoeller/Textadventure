@@ -47,7 +47,7 @@ def attackenmenu(gs):
         zahl += 1
     int_answer = 0
     while not (int_answer >0 and int_answer <= len(gs.current_pokemon.Attacklist)):
-        answer = input("Bitte wähle eine Attake zwischen 1 und {}\n".format(len(gs.current_pokemon.Attacklist)))
+        answer = input("Bitte wähle eine Attacke zwischen 1 und {}\n".format(len(gs.current_pokemon.Attacklist)))
         if answer.isnumeric():
             int_answer = int(answer)
     if gs.current_pokemon.Attacklist[int_answer-1].Attack_Counter_Current == 0:
@@ -179,6 +179,14 @@ def clear_screen():
     while condition <20:
         print()
         condition += 1
+
+
+
+
+
+
+
+
 
 
 
