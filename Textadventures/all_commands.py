@@ -19,7 +19,11 @@ def fight(gs):
         print(">>>Kampfmenü<<<\n")
         user_input = input("A:Kämpfen\nB:Pokemon wechseln (nicht verfügbar)\nC:Pokemonstats\nD:Laufen\n>")
         if user_input.lower() == "a":
-            dmg_calculator(gs, pokomon_to_fight, attackenmenu(gs))
+            for attack in gs.current_pokemon.Attacklist:
+                if attack.Attack_Counter_Current <=0:
+                    print("Bitte wähle eine Attacke die noch übrig ist")
+                else:
+                    dmg_calculator(gs, pokomon_to_fight, attackenmenu(gs))
         elif user_input.lower() == "b":
             pokemon_change(gs)
         elif user_input.lower() == "c":
@@ -47,8 +51,9 @@ def attackenmenu(gs):
         answer = input("Bitte wähle eine Attake zwischen 1 und {}\n".format(len(gs.current_pokemon.Attacklist)))
         if answer.isnumeric():
             int_answer = int(answer)
-    if gs.current_pokemon.Attacklist[int(int_answer)-1].Attack_Counter_Current >=0:
-        print("Bitte wähle eine Attacke die noch übrig ist")
+    #if gs.current_pokemon.Attacklist[int(int_answer)-1].Attack_Counter_Current <=0:
+     #   print("Bitte wähle eine Attacke die noch übrig ist")
+      #  return
     print(gs.current_pokemon.Name, "greift an mit:", gs.current_pokemon.Attacklist[int(int_answer) - 1].Name)
     chossen_attack = gs.current_pokemon.Attacklist[int(int_answer) - 1]
     chossen_attack.Attack_Counter_Current -= 1

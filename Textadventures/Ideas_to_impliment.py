@@ -1,0 +1,1 @@
+bugs = "WEnn man keine angriffe mehr hat kann man trotzudem weiter machen"
