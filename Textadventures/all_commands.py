@@ -1,5 +1,7 @@
 import PokemonClass
 import random
+import catch_pokemon
+import pokemon_change
 
 def _help (gs):
     print(new_Commands.keys())
@@ -17,22 +19,22 @@ def fight(gs):
     print("Was wirst du tun?\n")
     while gs.infight:
         print(">>>Kampfmenü<<<\n")
-        user_input = input("A:Kämpfen\nB:Pokemon wechseln (nicht verfügbar)\nC:Pokemonstats\nD:Laufen\n>")
+        user_input = input("A:Kämpfen\nB:Pokemon wechseln (nicht verfügbar)\nC:Pokemonstats\nD:Laufen\nE:Pokemon Fangen\n>")
         if user_input.lower() == "a":
-            for attack in gs.current_pokemon.Attacklist:
-                if attack.Attack_Counter_Current <=0:
-                    print("Bitte wähle eine Attacke die noch übrig ist")
-                else:
-                    dmg_calculator(gs, pokomon_to_fight, attackenmenu(gs))
+            dmg_calculator(gs, pokomon_to_fight, attackenmenu(gs))
         elif user_input.lower() == "b":
-            pokemon_change(gs)
+            pokemon_change.pokemon_change(gs)
         elif user_input.lower() == "c":
             stats(gs)
         elif user_input.lower() == "d":
             run(gs)
-
+        elif user_input.lower() == "e":
+            catch_pokemon.catch_pokemon(gs, pokomon_to_fight)
         else :
             print("Irgendwas musst du ja machen also sag an!")
+
+
+
 
 
 def current_hp(gs, Pokemon_to_fight):
@@ -127,6 +129,12 @@ def inventar(gs):
     #eine liste an allen items die der spieler mit sich trägt zb tränke oder pokebälle
     print("\nDiese Funktion ist noch nicht vorhanden!")
 
+def list_all_pokemon(gs):
+    print("Die Pokemon die du dabei hast sind:")
+    for pokemon in gs.pokemon_list:
+        print(pokemon.Name, "\n")
+
+
 def stats(gs):
     print("Was genau möchten sie Wissen?")
     answer = input("A: Pokemon HP?\nB: Pokemon Level?\nC: Benötigte Ep zum Levelup?\nD: Zurück\n>")
@@ -137,16 +145,12 @@ def stats(gs):
     elif answer.lower() == "c":
         print("Benötigte ep zum Levelup:", (gs.current_pokemon.Needed_ep-gs.current_pokemon.Current_ep))
     elif answer.lower() == "d":
-        return
+        print("1Dein Aktuelles Pokemon ist:", gs.current_pokemon.Name)
+        list_all_pokemon(gs)
     else:
         print("Zurück")
         return
 
-
-
-def pokemon_change(gs):
-    # man kann sein pokemon tauschen sowohl infight als auch ausserhalb des kampfes
-    print("\nDiese Funktion ist noch nicht vorhanden!")
 
 def save(gs):
     #speichert das spiel bzw das gs die pokemon und so weiter    fragt mit welchem namen es gespeichert werden soll

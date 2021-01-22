@@ -8,11 +8,12 @@ import Story_lines
 
 def main():
     print(Conversations.Intro)
-    gs = Gamestate.Gamestate("", 0, [], "")
+    gs = Gamestate.Gamestate("", 0, [], "", [])
     gs.name = input("\"Wie lautet dein Name?\"\n>")
     print("Prof. Acai: \"Ich heisse dich Willkommen", gs.name,"\"","\n\"Mein Name ist Prof. Acai\"\n\"Um Deine Reise starten zu können, brauchst Du natürlich erstmal ein Start-Pokemon.\"\n\"Bitte wähle eines der folgenen aus:\"")
     firstpokemon = input("Schiggy-WASSER; Glumanda-FEUER, Bisasam-PFLANZE\n>")
-    gs.current_pokemon = PokemonClass.startpokemon(firstpokemon)
+    gs.pokemon_list.append(PokemonClass.startpokemon(firstpokemon))
+    gs.current_pokemon = gs.pokemon_list[0]
     #startPokemon = PokemonClass.startpokemon(firstpokemon)
     while True:
         print(">>>Hauptmenü<<<")
