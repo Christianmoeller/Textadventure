@@ -20,7 +20,7 @@ def fight(gs):
     print("Was wirst du tun?\n")
     while gs.infight:
         print(">>>Kampfmenü<<<\n")
-        user_input = input("A:Kämpfen\nB:Pokemon wechseln\nC:Pokemonstats\nD:Laufen\nE:Pokemon Fangen\n>")
+        user_input = input("A:Kämpfen\nB:Pokemon wechseln\nC:Pokemonstats\nD:Laufen\nE:Pokemon Fangen(noch Instand)\n>")
         if user_input.lower() == "a":
             dmg_calculator(gs, pokomon_to_fight, attackenmenu(gs))
         elif user_input.lower() == "b":
