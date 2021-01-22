@@ -8,7 +8,7 @@ class Attack():
         self.Attack_Counter_Max = Attack_Counter_Max
 
 
-Tackle = Attack("Tackle", 10, "Normal", 2, 20)
+Tackle = Attack("Tackle", 10, "Normal", 20, 20)
 Bite = Attack("Biss", 20, "Normal", 15, 15)
 Ember = Attack("Glut", 16, "Feuer", 18, 18)
 Scratch = Attack("Kratzer", 12, "Normal", 20, 20)

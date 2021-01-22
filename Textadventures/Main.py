@@ -2,6 +2,8 @@ import all_commands
 import PokemonClass
 import Gamestate
 import Conversations
+import Story_lines
+
 
 
 def main():

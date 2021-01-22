@@ -1,0 +1,1 @@
+intro = "Wilkommen in der Welt von Pokemon 2.0\nDu fragst dich sicher wie das sein kann? Wie bist du hier her gekommen und wie kommst du wieder zurück?\nDas werde ich dir verraten wenn du es schaffst mir alle Pokemon zu bringen die es gibt.\nUm zu beginnen, verrate mir eins!"

@@ -45,15 +45,14 @@ def attackenmenu(gs):
     for Attak in gs.current_pokemon.Attacklist:
         print(zahl, Attak.Name, "noch:", Attak.Attack_Counter_Current, "übrig.")
         zahl += 1
-    asnwer_correct = True
     int_answer = 0
     while not (int_answer >0 and int_answer <= len(gs.current_pokemon.Attacklist)):
         answer = input("Bitte wähle eine Attake zwischen 1 und {}\n".format(len(gs.current_pokemon.Attacklist)))
         if answer.isnumeric():
             int_answer = int(answer)
-    #if gs.current_pokemon.Attacklist[int(int_answer)-1].Attack_Counter_Current <=0:
-     #   print("Bitte wähle eine Attacke die noch übrig ist")
-      #  return
+    if gs.current_pokemon.Attacklist[int_answer-1].Attack_Counter_Current == 0:
+        print("Du hast leider keine attaken mehr frei davon")
+        return
     print(gs.current_pokemon.Name, "greift an mit:", gs.current_pokemon.Attacklist[int(int_answer) - 1].Name)
     chossen_attack = gs.current_pokemon.Attacklist[int(int_answer) - 1]
     chossen_attack.Attack_Counter_Current -= 1
@@ -66,23 +65,10 @@ def attackenmenu(gs):
 def defeat_ep_calculation(pokemon_to_fight):
     return pokemon_to_fight.Ep_at_defeated_level1+(pokemon_to_fight.Ep_at_defeated_level1*0.1)
 
-"""def pokemon_stats(gs):
-    print(">>>Statsmenü<<<")
-    print("Was genau willst du den wissen?")
-    answers = input("A: Pokemon Hp?\nB: Pokemon Level?\nC: Benötigte Ep zum Levelup?\nD: Zurück\n>")
-    if answers == "a":
-        print("Dein", gs.current_pokemon.Name, "Hat noch:", gs.current_pokemon.Hp_Current, "/",gs.current_pokemon.Hp_Max)
-    elif answers == "b":
-        print("Dein",gs.current_pokemon.Name ,"ist Level:", gs.current_pokemon.Level)
-    elif answers == "c":
-        print("Benötigte ep zum Levelup:", (gs.current_pokemon.Needed_ep-gs.current_pokemon.Current_ep))
-    elif answers == "d":
-        return
-    else:
-        print("Zurück")
-        return"""
 
 def dmg_calculator(gs, pokemon_to_fight, current_pokemon_attack):
+    if current_pokemon_attack == None:
+        return
     sucess = random.randrange(0,100)
     if sucess >= 10:
         print("Du setzt:", current_pokemon_attack.Name, "ein")
@@ -115,6 +101,9 @@ def loot(gs, pokemon_to_fight):
 def level_up_stats(gs):
     gs.current_pokemon.Hp_Max = gs.current_pokemon.Hp_Max +25
     gs.current_pokemon.Hp_Current += 10
+    gs.current_pokemon.Dmg += 2
+    print("Die Max Hp von:", gs.current_pokemon.Name, "wurde um 20 erhöt.")
+    print("Der Schaden von:", gs.current_pokemon.Name, "wurde um 2 erhör.\n")
 
 def self_level_calcultion(gs, pokemon_to_fight):
     get_ep = gs.current_pokemon.Current_ep+pokemon_to_fight.Ep_to_give
