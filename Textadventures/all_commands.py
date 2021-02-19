@@ -144,12 +144,14 @@ def list_all_pokemon(gs):
 
 def stats(gs):
     print("Was genau möchten sie Wissen?")
-    answer = input("A: Pokemon HP?\nB: Pokemon Level?\nC: Benötigte Ep zum Levelup?\nD: Zurück\n>")
+    answer = input("A: Aktuelle Pokemon Stats?\nB: Pokemon Wechseln?\nC: Sichern?\nD: Laden\n>")
     if answer.lower() == "a":
-        print("Dein", gs.current_pokemon.Name, "Hat noch:", gs.current_pokemon.Hp_Current, "/",
-              gs.current_pokemon.Hp_Max)
+        print("Dein",gs.current_pokemon.Name,":","\n", "Hp:", gs.current_pokemon.Hp_Current, "/", gs.current_pokemon.Hp_Max,
+              "\n","Erfahrung:",gs.current_pokemon.Current_ep, "/", gs.current_pokemon.Needed_ep,"\n",
+              "Level:",gs.current_pokemon.Level)
+
     elif answer.lower() == "b":
-        print("Dein", gs.current_pokemon.Name, "ist Level:", gs.current_pokemon.Level)
+        pokemon_change.pokemon_change(gs)
     elif answer.lower() == "c":
         print("Benötigte ep zum Levelup:", (gs.current_pokemon.Needed_ep - gs.current_pokemon.Current_ep))
     elif answer.lower() == "d":
@@ -177,6 +179,10 @@ def money(gs):
 def pokecenter(gs):
     heal_notheal = input("Schwester Joy: \"Sollen wir uns um Ihr Pokemon kümmern?\"\n>")
     if heal_notheal == "ja":
+
+        for pokemon in gs.pokemon_list:
+            pokemon.Hp_Current = pokemon.Hp_Max
+
         gs.current_pokemon.Hp_Current = gs.current_pokemon.Hp_Max
         for Attack in gs.current_pokemon.Attacklist:
             Attack.Attack_Counter_Current = Attack.Attack_Counter_Max
