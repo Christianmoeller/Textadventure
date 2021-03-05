@@ -6,3 +6,5 @@ class Gamestate:
         self.start_pokeomn = current_pokemon
         self.infight = False
         self.pokemon_list = pokemon_list
+
+player = Gamestate("", 0, [], "",[])
