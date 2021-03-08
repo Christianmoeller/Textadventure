@@ -55,6 +55,7 @@ class PokemonClass:
         self.Attacklist = Attacklist
 
 
+
 # ein wert den jedes pokemon bekommt das eina deres pokemon besieht hat der auf den current ep wert addiert wird
 # ein level sysstem das ab einem bestimmten level sogar vill entwickeln lässt
 # eine berechnung die jedes pokemon beim instanziiren durchlebt, die alle werte berechent abhängig von ihrem level

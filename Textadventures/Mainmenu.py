@@ -1,38 +1,31 @@
 import PokemonClass
 import catch_pokemon
 from all_commands import *
-from Gamestate import player
+from Gamestate import *
 import Citys
 import pokemon_change
 import Choose_menu
+import json
 
 
 def _help():
-    print(main_menu.keys())
+    pass
 
 
 def fight():
     player.infight = True
-    pokomon_to_fight = PokemonClass.choose_pokemon()
+    player.pokemon_to_fight = PokemonClass.choose_pokemon()
     print("\nDu betritts die Arena und da steht schon ein Pokemon bereit für dich.")
-    print("Es ist ein Wildes:", pokomon_to_fight.Name, "Lvl:", pokomon_to_fight.Level)
-    print("Seine Hp", pokomon_to_fight.Hp_Current)
+    print("Es ist ein Wildes:", player.pokemon_to_fight.Name, "Lvl:", player.pokemon_to_fight.Level)
+    print("Seine Hp", player.pokemon_to_fight.Hp_Current)
     print("Was wirst du tun?\n")
     while player.infight:
         print(">>>Kampfmenü<<<\n")
-        user_input = input("A:Kämpfen\nB:Pokemon wechseln\nC:Pokemonstats\nD:Laufen\nE:Pokemon Fangen(noch Instand)\n>")
-        if user_input.lower() == "a":
-            dmg_calculator(pokomon_to_fight, attackenmenu())
-        elif user_input.lower() == "b":
-            pokemon_change.pokemon_change()
-        elif user_input.lower() == "c":
-            stats()
-        elif user_input.lower() == "d":
-            run()
-        elif user_input.lower() == "e":
-            catch_pokemon.catch_pokemon(pokomon_to_fight)
-        else:
-            print("Irgendwas musst du ja machen also sag an!")
+        Choose_menu.menu("Was willst du tun", {"angriff":attackenmenu,"pokemon wechseln":pokemon_change.pokemon_change,
+                                               "stats":pokemon_change.pokemon_change, "laufen":run,"fangen":catch_pokemon.catch_pokemon})
+
+
+
 
 
 def shop():
@@ -45,25 +38,9 @@ def inventar():
     print("\nDiese Funktion ist noch nicht vorhanden!")
 
 
-def stats():
-    print("Was genau möchten sie Wissen?")
-    answer = input("A: Aktuelle Pokemon Stats?\nB: Pokemon Wechseln?\nC: Sichern?\nD: Laden\n>")
-    if answer.lower() == "a":
-        print("Dein", player.current_pokemon.Name, ":", "\n", "Hp:", player.current_pokemon.Hp_Current, "/",
-              player.current_pokemon.Hp_Max,
-              "\n", "Erfahrung:", player.current_pokemon.Current_ep, "/", player.current_pokemon.Needed_ep, "\n",
-              "Level:", player.current_pokemon.Level)
-
-    elif answer.lower() == "b":
-        pokemon_change.pokemon_change()
-    elif answer.lower() == "c":
-        print("Benötigte ep zum Levelup:", (player.current_pokemon.Needed_ep - player.current_pokemon.Current_ep))
-    elif answer.lower() == "d":
-        print("Dein Aktuelles Pokemon ist:", player.current_pokemon.Name)
-        list_all_pokemon()
-    else:
-        print("Zurück")
-        return
+def pokemon_stats():
+    Choose_menu.menu("Was genau willst du Wissen", {"Alle Pokemon":list_all_pokemon,
+    "Aktuelles Pokemon Stats":current_pokemon_stats})
 
 
 def money():
@@ -93,23 +70,12 @@ def travel():
 
 
 def save():
-    pass
+    player.save("gamestate.json")
+    print("Spielstand Gespeichert")
 
 
-def load():
-    pass
+def load_game():
+    player = load("gamestate.json")
 
 
-main_menu = {
-    'reisen': travel,
-    'kämpfen': fight,
-    'einkaufen': shop,
-    'help': _help,
-    'inventar': inventar,
-    'stats': stats,
-    'wechseln': pokemon_change,
-    'save': save,
-    'load': load,
-    'geld': money,
-    'pokecenter': pokecenter
-}
+

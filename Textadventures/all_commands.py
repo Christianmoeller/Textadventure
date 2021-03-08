@@ -1,13 +1,13 @@
-
 import random
 
 from Gamestate import player
 
+
 def attackenmenu():
     print("Diese Attacken besitzt", player.current_pokemon.Name)
     zahl = 1
-    for Attak in player.current_pokemon.Attacklist:
-        print(zahl, Attak.Name, "Schaden:", Attak.Dmg, "Noch:", Attak.Attack_Counter_Current, "übrig.")
+    for Attack in player.current_pokemon.Attacklist:
+        print(zahl, Attack.Name, "Schaden:", Attack.Dmg, "Noch:", Attack.Attack_Counter_Current, "übrig.")
         zahl += 1
     int_answer = 0
     while not (int_answer > 0 and int_answer <= len(player.current_pokemon.Attacklist)):
@@ -22,33 +22,35 @@ def attackenmenu():
     chossen_attack.Attack_Counter_Current -= 1
     if chossen_attack.Attack_Counter_Current <= 0:
         chossen_attack.Attack_Counter_Current = 0
-    return chossen_attack
+    dmg_calculator(chossen_attack)
 
 
 def defeat_ep_calculation(pokemon_to_fight):
     return pokemon_to_fight.Ep_at_defeated_level1 + (pokemon_to_fight.Ep_at_defeated_level1 * 0.1)
 
 
-def dmg_calculator(pokemon_to_fight, current_pokemon_attack):
+def dmg_calculator(current_pokemon_attack):
     if current_pokemon_attack == None:
         return
     sucess = random.randrange(0, 100)
     if sucess >= 10:
         print("Du setzt:", current_pokemon_attack.Name, "ein")
-        pokemon_to_fight.Hp_Current = pokemon_to_fight.Hp_Current - current_pokemon_attack.Dmg
-        print("Du hast", pokemon_to_fight.Name, current_pokemon_attack.Dmg, "Schaden gemacht.", pokemon_to_fight.Name,
-              "hat noch:", pokemon_to_fight.Hp_Current, "HP")
-        if pokemon_to_fight.Hp_Current <= 0:
+        player.pokemon_to_fight.Hp_Current = player.pokemon_to_fight.Hp_Current - current_pokemon_attack.Dmg
+        print("Du hast", player.pokemon_to_fight.Name, current_pokemon_attack.Dmg, "Schaden gemacht.",
+              player.pokemon_to_fight.Name,
+              "hat noch:", player.pokemon_to_fight.Hp_Current, "HP")
+        if player.pokemon_to_fight.Hp_Current <= 0:
             print("du hast das Pokemon besiegt.")
-            loot(pokemon_to_fight)
-            self_level_calcultion(pokemon_to_fight)
+            loot(player.pokemon_to_fight)
+            self_level_calcultion(player.pokemon_to_fight)
             player.infight = False
+            player.pokemon_to_fight = None
 
     else:
-        attack_choise = random.choice(pokemon_to_fight.Attacklist)
+        attack_choise = random.choice(player.pokemon_to_fight.Attacklist)
         player.current_pokemon.Hp_Current = player.current_pokemon.Hp_Current - attack_choise.Dmg
-        print(pokemon_to_fight.Name, "setzt", attack_choise.Name, "ein.")
-        print(pokemon_to_fight.Name, "hat dir", attack_choise.Dmg, "Schaden gemacht. Du hast noch:",
+        print(player.pokemon_to_fight.Name, "setzt", attack_choise.Name, "ein.")
+        print(player.pokemon_to_fight.Name, "hat dir", attack_choise.Dmg, "Schaden gemacht. Du hast noch:",
               player.current_pokemon.Hp_Current, "HP")
         if player.current_pokemon.Hp_Current <= 0:
             print("Dein Pokemon wurde besiegt. Spiel beendet!")
@@ -92,3 +94,8 @@ def list_all_pokemon():
     for pokemon in player.pokemon_list:
         print(pokemon.Name, "\n")
 
+
+def current_pokemon_stats():
+    print(player.current_pokemon.Name, ": Meine Hp liegen bei", player.current_pokemon.Hp_Current, "von",
+          player.current_pokemon.Hp_Max
+          , "\nIch habe", player.current_pokemon.Current_ep, "EP und brauche noch", player.current_pokemon.Needed_ep,"EP für level", player.current_pokemon.Level+1)
