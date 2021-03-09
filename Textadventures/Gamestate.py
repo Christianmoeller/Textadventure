@@ -4,11 +4,11 @@ from Attack_list import *
 
 
 class Gamestate:
-    def __init__(self, name="", money=0, inventar = None, current_pokemon=None, pokemon_list=None):
+    def __init__(self, name="", money=0, inventar=None, current_pokemon=None, pokemon_list=None):
         self.name = name
         self.money = money
         self.inventar = inventar
-        self.start_pokeomn = current_pokemon
+        self.current_pokemon = current_pokemon
         self.infight = False
         self.pokemon_list = pokemon_list
         self.pokemon_to_fight = None
@@ -17,6 +17,7 @@ class Gamestate:
         f = open(path, "w")
         f.write(json.dumps(self, cls=GamestateJsonEncoder))
         f.close()
+
 
 
 def load(path):

@@ -5,32 +5,26 @@ from Gamestate import *
 import Citys
 import pokemon_change
 import Choose_menu
-import json
-
-
-def _help():
-    pass
+import Gamestate
+import Trader
 
 
 def fight():
-    player.infight = True
-    player.pokemon_to_fight = PokemonClass.choose_pokemon()
+    Gamestate.player.infight = True
+    Gamestate.player.pokemon_to_fight = PokemonClass.choose_pokemon()
     print("\nDu betritts die Arena und da steht schon ein Pokemon bereit für dich.")
-    print("Es ist ein Wildes:", player.pokemon_to_fight.Name, "Lvl:", player.pokemon_to_fight.Level)
-    print("Seine Hp", player.pokemon_to_fight.Hp_Current)
+    print("Es ist ein Wildes:", Gamestate.player.pokemon_to_fight.Name, "Lvl:", Gamestate.player.pokemon_to_fight.Level)
+    print("Seine Hp", Gamestate.player.pokemon_to_fight.Hp_Current)
     print("Was wirst du tun?\n")
-    while player.infight:
+    while Gamestate.player.infight:
         print(">>>Kampfmenü<<<\n")
-        Choose_menu.menu("Was willst du tun", {"angriff":attackenmenu,"pokemon wechseln":pokemon_change.pokemon_change,
-                                               "stats":pokemon_change.pokemon_change, "laufen":run,"fangen":catch_pokemon.catch_pokemon})
-
-
-
+        Choose_menu.menu("Was willst du tun",
+                         {"angriff": attackenmenu, "pokemon wechseln": pokemon_change.pokemon_change,
+                          "stats": pokemon_change.pokemon_change, "laufen": run, "fangen": catch_pokemon.catch_pokemon})
 
 
 def shop():
-    Choose_menu.menu("Welchen Händler willst du sprechen?", {"pokeball": Citys.pokeball_trader, "tränke":Citys.potion_trader})
-
+    Choose_menu.menu("Welchen Händler willst du sprechen?", {"Händer für Allgemeines": Trader.dealer_for_everything})
 
 
 def inventar():
@@ -39,23 +33,23 @@ def inventar():
 
 
 def pokemon_stats():
-    Choose_menu.menu("Was genau willst du Wissen", {"Alle Pokemon":list_all_pokemon,
-    "Aktuelles Pokemon Stats":current_pokemon_stats})
+    Choose_menu.menu("Was genau willst du Wissen", {"Alle Pokemon": list_all_pokemon,
+                                                    "Aktuelles Pokemon Stats": current_pokemon_stats})
 
 
 def money():
-    print("Aktueller Kontostand:", player.money, "€\n")
+    print("Aktueller Kontostand:", Gamestate.player.money, "€\n")
 
 
 def pokecenter():
     heal_notheal = input("Schwester Joy: \"Sollen wir uns um Ihr Pokemon kümmern?\"\n>")
     if heal_notheal == "ja":
 
-        for pokemon in player.pokemon_list:
+        for pokemon in Gamestate.player.pokemon_list:
             pokemon.Hp_Current = pokemon.Hp_Max
 
-        player.current_pokemon.Hp_Current = player.current_pokemon.Hp_Max
-        for Attack in player.current_pokemon.Attacklist:
+        Gamestate.player.current_pokemon.Hp_Current = Gamestate.player.current_pokemon.Hp_Max
+        for Attack in Gamestate.player.current_pokemon.Attacklist:
             Attack.Attack_Counter_Current = Attack.Attack_Counter_Max
         print("Musik...")
         print("Schwester Joy:\"Deinem Pokemon geht es wieder gut. Beehren sie uns bald wieder!\"")
@@ -70,7 +64,7 @@ def travel():
 
 
 def save():
-    player.save("gamestate.json")
+    Gamestate.player.save("gamestate.json")
     print("Spielstand Gespeichert")
 
 

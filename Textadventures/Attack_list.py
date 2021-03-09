@@ -1,4 +1,3 @@
-
 class Attack():
     def __init__(self, Name, Dmg, Type, Attack_Counter_Current, Attack_Counter_Max):
         self.Name = Name
@@ -6,6 +5,7 @@ class Attack():
         self.Type = Type
         self.Attack_Counter_Current = Attack_Counter_Current
         self.Attack_Counter_Max = Attack_Counter_Max
+
 
 
 Tackle = Attack("Tackle", 10, "Normal", 20, 20)
