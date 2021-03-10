@@ -1,8 +1,6 @@
 import PokemonClass
 import catch_pokemon
-from all_commands import *
-from Gamestate import *
-import Citys
+from all_commands import attackenmenu, list_all_pokemon, run, current_pokemon_stats
 import pokemon_change
 import Choose_menu
 import Gamestate
@@ -19,8 +17,8 @@ def fight():
     while Gamestate.player.infight:
         print(">>>Kampfmenü<<<\n")
         Choose_menu.menu("Was willst du tun",
-                         {"angriff": attackenmenu, "pokemon wechseln": pokemon_change.pokemon_change,
-                          "stats": pokemon_change.pokemon_change, "laufen": run, "fangen": catch_pokemon.catch_pokemon})
+                         {"Angriff": attackenmenu, "Pokemon wechseln": pokemon_change.pokemon_change,
+                          "Status deiner Pokemon": pokemon_stats, "Weg laufen": run, "Pokemon fangen": catch_pokemon.catch_pokemon})
 
 
 def shop():
@@ -69,7 +67,4 @@ def save():
 
 
 def load_game():
-    player = load("gamestate.json")
-
-
-
+    player = Gamestate.load("gamestate.json")
