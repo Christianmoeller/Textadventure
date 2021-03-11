@@ -1,22 +1,25 @@
-import all_commands
-import PokemonClass
-import Gamestate
 import Conversations
-import Story_lines
-from Mainmenu import *
-import Choose_menu
-from pokemon_change import *
-
+import Gamestate
+from PokemonClass import startpokemon
+from Choose_menu import menu
+from Mainmenu import fight, pokecenter, pokemon_stats, money, save, load_game, shop, inventar
+from pokemon_change import pokemon_change
 
 
 def main():
     print(Conversations.Intro)
-    player.name = input("\"Wie lautet dein Name?\"\n>")
-    print("Prof. Acai: \"Ich heisse dich Willkommen", player.name,"\"","\n\"Mein Name ist Prof. Acai\"\n\"Um Deine Reise starten zu können, brauchst Du natürlich erstmal ein Start-Pokemon.\"\n\"Bitte wähle eines der folgenen aus:\"")
+    Gamestate.player.name = input("\"Wie lautet dein Name?\"\n>")
+    print("Prof. Acai: \"Ich heisse dich Willkommen", Gamestate.player.name, "\"",
+          "\n\"Mein Name ist Prof. Acai\"\n\"Um Deine Reise starten zu können, brauchst Du natürlich erstmal ein Start-Pokemon.\"\n\"Bitte wähle eines der folgenen aus:\"")
     firstpokemon = input("Schiggy-WASSER; Glumanda-FEUER, Bisasam-PFLANZE\n>")
-    player.pokemon_list.append(startpokemon(firstpokemon))
-    player.current_pokemon = player.pokemon_list[0]
+    Gamestate.player.pokemon_list.append(startpokemon(firstpokemon))
+    Gamestate.player.current_pokemon = Gamestate.player.pokemon_list[0]
     while True:
         print(">>>Hauptmenü<<<")
-        Choose_menu.menu("Was willst du tun?\n",{"Kämpfen":fight, "Pokecenter":pokecenter, "Pokemon":pokemon_stats, "Pokemon wechseln":pokemon_change, "Geldbeutel":money, "save":save, "load":load_game})
+        menu("Was willst du tun?\n",
+             {"Kämpfen": fight, "Pokecenter": pokecenter, "Pokemon": pokemon_stats, "Pokemon wechseln": pokemon_change,
+              "Inventar": inventar,
+              "Geldbeutel": money, "Einkaufen": shop, "save": save, "load": load_game})
+
+
 main()

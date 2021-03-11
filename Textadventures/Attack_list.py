@@ -7,6 +7,10 @@ class Attack():
         self.Attack_Counter_Max = Attack_Counter_Max
 
 
+def fromJSON(JSONdict):
+    return Attack(JSONdict["Name"], JSONdict["Dmg"], JSONdict["Type"], JSONdict["Attack_Counter_Current"],
+                  JSONdict["Attack_Counter_Max"])
+
 
 Tackle = Attack("Tackle", 10, "Normal", 20, 20)
 Bite = Attack("Biss", 20, "Normal", 15, 15)

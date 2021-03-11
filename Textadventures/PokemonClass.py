@@ -120,3 +120,13 @@ def choose_pokemon():
     random_pokemon.Hp_Max = random_pokemon.Hp_Max + (random_pokemon.Hp_Max * (level * 0.2))
     random_pokemon.Ep_to_give = random_pokemon.Ep_to_give + (random_pokemon.Ep_to_give * (level))
     return random_pokemon
+
+def fromJSON(JSONdict):
+    attacklist = []
+    for attackJSON in JSONdict["Attacklist"]:
+        attacklist.append(Attack_list.fromJSON(attackJSON))
+    return PokemonClass(JSONdict["Name"], JSONdict["Type"],
+                 JSONdict["Hp_Current"], JSONdict["Hp_Max"],
+                 JSONdict["Dmg"], JSONdict["Level"], JSONdict["Current_ep"],
+                 JSONdict["Needed_ep"], JSONdict["Ep_at_defeated_level1"],
+                 attacklist)

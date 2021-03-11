@@ -14,6 +14,15 @@ obj_trader_VertaniaCity = Trader("Tim Hobbs",
                                   Items.hyper_hp_pot])
 
 
+# def trader_interaction(trader):
+# printe begrüßung, rufe buy_dialogue() auf
+
+# def: buy_dialogue(itemlist):
+# print itemliste, rufe nach auswahl buy() auf
+
+# def: buy(item)
+# kauflogik (item in gamestate übernehmen, geld abziehen
+
 def trader_VertaniaCity():
     print(obj_trader_VertaniaCity.name, "sagt: Willkommen in meinem Shop!")
     Choose_menu.menu("Für welches der folegenden Items interessierst du dich?",

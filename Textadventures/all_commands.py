@@ -1,24 +1,23 @@
 import random
-
-from Gamestate import player
+import Gamestate
 
 
 def attackenmenu():
-    print("Diese Attacken besitzt", player.current_pokemon.Name)
+    print("Diese Attacken besitzt", Gamestate.player.current_pokemon.Name)
     zahl = 1
-    for Attack in player.current_pokemon.Attacklist:
+    for Attack in Gamestate.player.current_pokemon.Attacklist:
         print(zahl, Attack.Name, "Schaden:", Attack.Dmg, "Noch:", Attack.Attack_Counter_Current, "übrig.")
         zahl += 1
     int_answer = 0
-    while not (int_answer > 0 and int_answer <= len(player.current_pokemon.Attacklist)):
-        answer = input("Bitte wähle eine Attacke zwischen 1 und {}\n".format(len(player.current_pokemon.Attacklist)))
+    while not (int_answer > 0 and int_answer <= len(Gamestate.player.current_pokemon.Attacklist)):
+        answer = input("Bitte wähle eine Attacke zwischen 1 und {}\n".format(len(Gamestate.player.current_pokemon.Attacklist)))
         if answer.isnumeric():
             int_answer = int(answer)
-    if player.current_pokemon.Attacklist[int_answer - 1].Attack_Counter_Current == 0:
+    if Gamestate.player.current_pokemon.Attacklist[int_answer - 1].Attack_Counter_Current == 0:
         print("Du hast leider keine attaken mehr frei davon")
         return
-    print(player.current_pokemon.Name, "greift an mit:", player.current_pokemon.Attacklist[int(int_answer) - 1].Name)
-    chossen_attack = player.current_pokemon.Attacklist[int(int_answer) - 1]
+    print(Gamestate.player.current_pokemon.Name, "greift an mit:", Gamestate.player.current_pokemon.Attacklist[int(int_answer) - 1].Name)
+    chossen_attack = Gamestate.player.current_pokemon.Attacklist[int(int_answer) - 1]
     chossen_attack.Attack_Counter_Current -= 1
     if chossen_attack.Attack_Counter_Current <= 0:
         chossen_attack.Attack_Counter_Current = 0
@@ -35,67 +34,68 @@ def dmg_calculator(current_pokemon_attack):
     sucess = random.randrange(0, 100)
     if sucess >= 10:
         print("Du setzt:", current_pokemon_attack.Name, "ein")
-        player.pokemon_to_fight.Hp_Current = player.pokemon_to_fight.Hp_Current - current_pokemon_attack.Dmg
-        print("Du hast", player.pokemon_to_fight.Name, current_pokemon_attack.Dmg, "Schaden gemacht.",
-              player.pokemon_to_fight.Name,
-              "hat noch:", player.pokemon_to_fight.Hp_Current, "HP")
-        if player.pokemon_to_fight.Hp_Current <= 0:
+        Gamestate.player.pokemon_to_fight.Hp_Current = Gamestate.player.pokemon_to_fight.Hp_Current - current_pokemon_attack.Dmg
+        print("Du hast", Gamestate.player.pokemon_to_fight.Name, current_pokemon_attack.Dmg, "Schaden gemacht.",
+              Gamestate.player.pokemon_to_fight.Name,
+              "hat noch:", Gamestate.player.pokemon_to_fight.Hp_Current, "HP")
+        if Gamestate.player.pokemon_to_fight.Hp_Current <= 0:
             print("du hast das Pokemon besiegt.")
-            loot(player.pokemon_to_fight)
-            self_level_calcultion(player.pokemon_to_fight)
-            player.infight = False
-            player.pokemon_to_fight = None
+            loot(Gamestate.player.pokemon_to_fight)
+            self_level_calcultion(Gamestate.player.pokemon_to_fight)
+            Gamestate.player.infight = False
+            Gamestate.player.pokemon_to_fight = None
 
     else:
-        attack_choise = random.choice(player.pokemon_to_fight.Attacklist)
-        player.current_pokemon.Hp_Current = player.current_pokemon.Hp_Current - attack_choise.Dmg
-        print(player.pokemon_to_fight.Name, "setzt", attack_choise.Name, "ein.")
-        print(player.pokemon_to_fight.Name, "hat dir", attack_choise.Dmg, "Schaden gemacht. Du hast noch:",
-              player.current_pokemon.Hp_Current, "HP")
-        if player.current_pokemon.Hp_Current <= 0:
+        attack_choise = random.choice(Gamestate.player.pokemon_to_fight.Attacklist)
+        Gamestate.player.current_pokemon.Hp_Current = Gamestate.player.current_pokemon.Hp_Current - attack_choise.Dmg
+        print(Gamestate.player.pokemon_to_fight.Name, "setzt", attack_choise.Name, "ein.")
+        print(Gamestate.player.pokemon_to_fight.Name, "hat dir", attack_choise.Dmg, "Schaden gemacht. Du hast noch:",
+              Gamestate.player.current_pokemon.Hp_Current, "HP")
+        if Gamestate.player.current_pokemon.Hp_Current <= 0:
             print("Dein Pokemon wurde besiegt. Spiel beendet!")
             quit()
 
 
 def run():
     print("Du bist entkommen")
-    player.infight = False
+    Gamestate.player.infight = False
 
 
 def loot(pokemon_to_fight):
     # abhängig von der stärke des pokemons das man besiegt hat soll man mehr geld bekommen
-    player.money = player.money + pokemon_to_fight.Level + 10
+    Gamestate.player.money = Gamestate.player.money + pokemon_to_fight.Level + 10
 
 
 def level_up_stats():
-    player.current_pokemon.Hp_Max = player.current_pokemon.Hp_Max + 25
-    player.current_pokemon.Hp_Current += 10
-    player.current_pokemon.Dmg += 2
-    print("Die Max Hp von:", player.current_pokemon.Name, "wurde um 20 erhöt.")
-    print("Der Schaden von:", player.current_pokemon.Name, "wurde um 2 erhör.\n")
+    Gamestate.player.current_pokemon.Hp_Max = Gamestate.player.current_pokemon.Hp_Max + 25
+    Gamestate.player.current_pokemon.Hp_Current += 10
+    Gamestate.player.current_pokemon.Dmg += 2
+    print("Die Max Hp von:", Gamestate.player.current_pokemon.Name, "wurde um 20 erhöt.")
+    print("Der Schaden von:", Gamestate.player.current_pokemon.Name, "wurde um 2 erhör.\n")
 
 
 def self_level_calcultion(pokemon_to_fight):
-    get_ep = player.current_pokemon.Current_ep + pokemon_to_fight.Ep_to_give
+    get_ep = Gamestate.player.current_pokemon.Current_ep + pokemon_to_fight.Ep_to_give
     print("Erhaltene Ep:", get_ep, "\n")
-    player.current_pokemon.Current_ep = player.current_pokemon.Current_ep + get_ep
-    if player.current_pokemon.Current_ep >= player.current_pokemon.Needed_ep:
-        while player.current_pokemon.Current_ep >= player.current_pokemon.Needed_ep:
-            player.current_pokemon.Level += 1
-            print("Dein", player.current_pokemon.Name, "ist nun level:", player.current_pokemon.Level)
+    Gamestate.player.current_pokemon.Current_ep = Gamestate.player.current_pokemon.Current_ep + get_ep
+    if Gamestate.player.current_pokemon.Current_ep >= Gamestate.player.current_pokemon.Needed_ep:
+        while Gamestate.player.current_pokemon.Current_ep >= Gamestate.player.current_pokemon.Needed_ep:
+            Gamestate.player.current_pokemon.Level += 1
+            print("Dein", Gamestate.player.current_pokemon.Name, "ist nun level:", Gamestate.player.current_pokemon.Level)
             level_up_stats()
             print("Seine Max Hp sind um 25 gestiegen.\nSeine Aktuellen Hp sind um 10 erhöt\n")
-            player.current_pokemon.Current_ep = player.current_pokemon.Current_ep - player.current_pokemon.Needed_ep
-            player.current_pokemon.Needed_ep = player.current_pokemon.Needed_ep + 150
+            Gamestate.player.current_pokemon.Current_ep = Gamestate.player.current_pokemon.Current_ep - Gamestate.player.current_pokemon.Needed_ep
+            Gamestate.player.current_pokemon.Needed_ep = Gamestate.player.current_pokemon.Needed_ep + 150
 
 
 def list_all_pokemon():
     print("Die Pokemon die du dabei hast sind:")
-    for pokemon in player.pokemon_list:
-        print(pokemon.Name, "\n")
+    for pokemon in Gamestate.player.pokemon_list:
+        print(pokemon.Name, "Level:",pokemon.Level,"Hp:",pokemon.Hp_Current,"/", pokemon.Hp_Max)
+    print("\n")
 
 
 def current_pokemon_stats():
-    print(player.current_pokemon.Name, ": Meine Hp liegen bei", player.current_pokemon.Hp_Current, "von",
-          player.current_pokemon.Hp_Max
-          , "\nIch habe", player.current_pokemon.Current_ep, "EP und brauche noch", player.current_pokemon.Needed_ep,"EP für level", player.current_pokemon.Level+1)
+    print(Gamestate.player.current_pokemon.Name, ": Meine Hp liegen bei", Gamestate.player.current_pokemon.Hp_Current, "von",
+          Gamestate.player.current_pokemon.Hp_Max
+          , "\nIch habe", Gamestate.player.current_pokemon.Current_ep, "EP und brauche noch", Gamestate.player.current_pokemon.Needed_ep,"EP für level", Gamestate.player.current_pokemon.Level+1)
