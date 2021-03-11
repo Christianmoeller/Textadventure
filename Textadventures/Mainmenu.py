@@ -22,12 +22,13 @@ def fight():
 
 
 def shop():
-    Choose_menu.menu("Welchen Händler willst du sprechen?", {"Händer für Allgemeines": Trader.dealer_for_everything})
+    Choose_menu.menu("Welchen Händler willst du sprechen?", {"Händer aus Vertania City": Trader.trader_VertaniaCity})
 
 
 def inventar():
-    # eine liste an allen items die der spieler mit sich trägt zb tränke oder pokebälle
-    print("\nDiese Funktion ist noch nicht vorhanden!")
+    print("In deinem Inventar befindet sich:")
+    print(Gamestate.player.inventar)
+
 
 
 def pokemon_stats():

@@ -4,7 +4,7 @@ from Attack_list import *
 
 
 class Gamestate:
-    def __init__(self, name="", money=0, inventar=None, current_pokemon=None, pokemon_list=None):
+    def __init__(self, name="", money=0, inventar = {}, current_pokemon=None, pokemon_list=None):
         self.name = name
         self.money = money
         self.inventar = inventar

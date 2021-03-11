@@ -9,3 +9,6 @@ hyperball = Items("Hyper Ball", 20)
 hp_pot = Items("Heiltrank", 25)
 super_hp_pot = Items("Super Heiltrank", 30)
 hyper_hp_pot = Items("Hyper Heiltrank", 40)
+
+def fromJSONItem(JSONdict):
+    return Items(JSONdict["name"], JSONdict["price"])

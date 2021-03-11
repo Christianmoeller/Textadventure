@@ -1,5 +1,5 @@
 import Items
-from Gamestate import player
+import Gamestate
 from Textadventures import Choose_menu
 
 
@@ -9,43 +9,45 @@ class Trader:
         self.itemList = ItemList
 
 
-obj_dealer_for_everything = Trader("Tim Hobbs",
-                               [Items.pokeball, Items.superball, Items.hyperball, Items.hp_pot, Items.super_hp_pot,
-                                Items.hyper_hp_pot])
+obj_trader_VertaniaCity = Trader("Tim Hobbs",
+                                 [Items.pokeball, Items.superball, Items.hyperball, Items.hp_pot, Items.super_hp_pot,
+                                  Items.hyper_hp_pot])
 
 
-def dealer_for_everything():
-    print(obj_dealer_for_everything.name, "sagt: Willkommen in meinem Shop! Such dir was aus.")
-    itemlist = obj_dealer_for_everything.itemList
-    for item in itemlist:
-        print(item.name)
-    itemchoose = input("Was davon willst du kaufen?")
-    if itemchoose == "pokeball":
-        if player.money >= dealer_for_everything.itemList[0].price:
-            player.money = player.money - dealer_for_everything.itemList[0].price
-            print("Hier hast du einen Pokeball")
+def trader_VertaniaCity():
+    print(obj_trader_VertaniaCity.name, "sagt: Willkommen in meinem Shop!")
+    Choose_menu.menu("Für welches der folegenden Items interessierst du dich?",
+                     {"Pokeball": buyPokemall, "Superball": buySuperball, "Hyperball": buyHyperball})
+
+
+# inventar py datei   neu schreiben
+#
+
+def buyPokemall():
+    if Gamestate.player.money >= obj_trader_VertaniaCity.itemList[0].price:
+        Gamestate.player.money = Gamestate.player.money - obj_trader_VertaniaCity.itemList[0].price
+        if Gamestate.player.inventar.get("Pokeball") == None:
+            Gamestate.player.inventar["Pokeball"] = 1
         else:
-            print("Tut mir leid aber du hast nicht genug Geld bei dir!")
-    elif itemchoose == "hyperball":
-        if player.money >= dealer_for_everything.itemList[2].price:
-            player.money = player.money - dealer_for_everything.itemList[2].price
-            print("Hier hast du einen Hyperball")
-        else:
-            print("Tut mir leid aber du hast nicht genug Geld bei dir!")
-    elif itemchoose == "superball":
-        if player.money >= dealer_for_everything.itemList[1].price:
-            player.money = player.money - dealer_for_everything.itemList[1].price
-            print("Hier hast du ein Superball")
-        else:
-            print("Tut mir leid aber du hast nicht genug Geld bei dir!")
+            Gamestate.player.inventar["Pokeball"] = Gamestate.player.inventar["Pokeball"]+1
+        print(obj_trader_VertaniaCity.name, ": Hier hast du einen Pokeball")
     else:
-        print("Okay Ciao")
+        print(obj_trader_VertaniaCity.name, ": Tut mir leid aber du hast nicht genug Geld bei dir!")
 
-# wenn der händler aufgerufen wird  werden erst mal alle items angegeben die zur verfügung stehen
-# der user soll aus diesen items mit der davor stehenden zahl ein item auswählen und dann wird erst der kauf abgewickelt
-# jedes auflisten braucht eine funktion?
 
-def testShop(sentence, itemlist):
-    notDone = True
-    print(sentence)
+def buyHyperball():
+    if Gamestate.player.money >= obj_trader_VertaniaCity.itemList[2].price:
+        Gamestate.player.money = Gamestate.player.money - obj_trader_VertaniaCity.itemList[2].price
+        Gamestate.player.inventar.append(obj_trader_VertaniaCity.itemList[2])
+        print(obj_trader_VertaniaCity.name, ": Hier hast du einen Hyperball")
+    else:
+        print(obj_trader_VertaniaCity.name, ": Tut mir leid aber du hast nicht genug Geld bei dir!")
 
+
+def buySuperball():
+    if Gamestate.player.money >= obj_trader_VertaniaCity.itemList[1].price:
+        Gamestate.player.money = Gamestate.player.money - obj_trader_VertaniaCity.itemList[1].price
+        Gamestate.player.inventar.append(obj_trader_VertaniaCity.itemList[1])
+        print(obj_trader_VertaniaCity.name, ": Hier hast du ein Superball")
+    else:
+        print(obj_trader_VertaniaCity.name, ": Tut mir leid aber du hast nicht genug Geld bei dir!")
