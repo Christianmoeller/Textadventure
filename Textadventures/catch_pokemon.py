@@ -1,4 +1,5 @@
-from Gamestate import player
+import Gamestate
+import Items
 
 
 def catch_pokemon():
@@ -13,7 +14,7 @@ def catch_pokemon():
             player.pokemon_to_fight = None
             return player.infight
     else:
-        if Gamestate.player.inventar.get("Pokeball") <= 0:
+        if Gamestate.player.inventar.get(Items.pokeball) <= 0:
             print("Du hast keinen pokeball übrig")
         elif Gamestate.player.pokemon_to_fight.Hp_Current < Gamestate.player.pokemon_to_fight.Hp_Max / 2:
             print("Du kannst das Pokemon noch nicht fagen solange es mehr als 50% HP hat")
