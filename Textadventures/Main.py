@@ -4,9 +4,11 @@ from PokemonClass import startpokemon
 from Choose_menu import menu
 from Mainmenu import fight, pokecenter, pokemon_stats, money, save, load_game, shop, inventar
 from pokemon_change import pokemon_change
+import all_commands
 
 
 def main():
+    all_commands.start_load()
     print(Conversations.Intro)
     Gamestate.player.name = input("\"Wie lautet dein Name?\"\n>")
     print("Prof. Acai: \"Ich heisse dich Willkommen", Gamestate.player.name, "\"",

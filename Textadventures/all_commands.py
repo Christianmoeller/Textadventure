@@ -1,5 +1,9 @@
 import random
 import Gamestate
+import Choose_menu
+import Mainmenu
+
+
 
 
 def attackenmenu():
@@ -10,13 +14,15 @@ def attackenmenu():
         zahl += 1
     int_answer = 0
     while not (int_answer > 0 and int_answer <= len(Gamestate.player.current_pokemon.Attacklist)):
-        answer = input("Bitte wähle eine Attacke zwischen 1 und {}\n".format(len(Gamestate.player.current_pokemon.Attacklist)))
+        answer = input(
+            "Bitte wähle eine Attacke zwischen 1 und {}\n".format(len(Gamestate.player.current_pokemon.Attacklist)))
         if answer.isnumeric():
             int_answer = int(answer)
     if Gamestate.player.current_pokemon.Attacklist[int_answer - 1].Attack_Counter_Current == 0:
         print("Du hast leider keine attaken mehr frei davon")
         return
-    print(Gamestate.player.current_pokemon.Name, "greift an mit:", Gamestate.player.current_pokemon.Attacklist[int(int_answer) - 1].Name)
+    print(Gamestate.player.current_pokemon.Name, "greift an mit:",
+          Gamestate.player.current_pokemon.Attacklist[int(int_answer) - 1].Name)
     chossen_attack = Gamestate.player.current_pokemon.Attacklist[int(int_answer) - 1]
     chossen_attack.Attack_Counter_Current -= 1
     if chossen_attack.Attack_Counter_Current <= 0:
@@ -81,7 +87,8 @@ def self_level_calcultion(pokemon_to_fight):
     if Gamestate.player.current_pokemon.Current_ep >= Gamestate.player.current_pokemon.Needed_ep:
         while Gamestate.player.current_pokemon.Current_ep >= Gamestate.player.current_pokemon.Needed_ep:
             Gamestate.player.current_pokemon.Level += 1
-            print("Dein", Gamestate.player.current_pokemon.Name, "ist nun level:", Gamestate.player.current_pokemon.Level)
+            print("Dein", Gamestate.player.current_pokemon.Name, "ist nun level:",
+                  Gamestate.player.current_pokemon.Level)
             level_up_stats()
             print("Seine Max Hp sind um 25 gestiegen.\nSeine Aktuellen Hp sind um 10 erhöt\n")
             Gamestate.player.current_pokemon.Current_ep = Gamestate.player.current_pokemon.Current_ep - Gamestate.player.current_pokemon.Needed_ep
@@ -91,11 +98,25 @@ def self_level_calcultion(pokemon_to_fight):
 def list_all_pokemon():
     print("Die Pokemon die du dabei hast sind:")
     for pokemon in Gamestate.player.pokemon_list:
-        print(pokemon.Name, "Level:",pokemon.Level,"Hp:",pokemon.Hp_Current,"/", pokemon.Hp_Max)
+        print(pokemon.Name, "Level:", pokemon.Level, "Hp:", pokemon.Hp_Current, "/", pokemon.Hp_Max)
     print("\n")
 
 
 def current_pokemon_stats():
-    print(Gamestate.player.current_pokemon.Name, ": Meine Hp liegen bei", Gamestate.player.current_pokemon.Hp_Current, "von",
+    print(Gamestate.player.current_pokemon.Name, ": Meine Hp liegen bei", Gamestate.player.current_pokemon.Hp_Current,
+          "von",
           Gamestate.player.current_pokemon.Hp_Max
-          , "\nIch habe", Gamestate.player.current_pokemon.Current_ep, "EP und brauche noch", Gamestate.player.current_pokemon.Needed_ep,"EP für level", Gamestate.player.current_pokemon.Level+1)
+          , "\nIch habe", Gamestate.player.current_pokemon.Current_ep, "EP und brauche noch",
+          Gamestate.player.current_pokemon.Needed_ep, "EP für level", Gamestate.player.current_pokemon.Level + 1)
+
+
+def start_load():
+    userinput = input("Wills du Starten oder Spielstand landen?")
+    if userinput == "start":
+        return
+    elif userinput == "laden":
+        Mainmenu.load_game()
+        Choose_menu.menu("Was willst du tun?\n",
+             {"Kämpfen": Mainmenu.fight, "Pokecenter": Mainmenu.pokecenter, "Pokemon": Mainmenu.pokemon_stats, "Pokemon wechseln": Mainmenu.pokemon_change,
+              "Inventar": Mainmenu.inventar,
+              "Geldbeutel": Mainmenu.money, "Einkaufen": Mainmenu.shop, "save": Mainmenu.save, "load": Mainmenu.load_game})
