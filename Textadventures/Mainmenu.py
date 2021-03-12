@@ -26,8 +26,13 @@ def shop():
 
 
 def inventar():
-    print("In deinem Inventar befindet sich:")
-    print(Gamestate.player.inventar)
+
+    if Gamestate.player.inventar == {}:
+        print("Dein Inventar ist leer. Geh in den Shop um dir Items zu kaufen.")
+    else:
+        print("In deinem Inventar befinden sich folgende Items")
+        for key, value in Gamestate.player.inventar.items():
+            print(key.name, value)
 
 
 

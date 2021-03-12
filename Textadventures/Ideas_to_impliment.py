@@ -1,7 +1,21 @@
 """
-pokemon fangen
-gs braucht eine liste mit vorhandenn pokemon
-wenn ich starte wird mein startpokemon auf die erste stelle gestellt  also ist current pokemon   pokemonlist[0]
+
+IDEEN ZUM EINBAUEN:
+
+    -
+    -
+    -
+    -
+
+
+
+DINGE DIE ERLEDIGT GEHÖREN/BUGS
+    - ein pokemon zu fangen ohne irgend ein item im inventar zu haben macht rums -> eune fuktion die checkt ob ein item vorhanden ist
+        und je nach dem reagiert
+
+    -
+    -
+    -
 
 
 """
