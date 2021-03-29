@@ -6,6 +6,7 @@ import Choose_menu
 import Gamestate
 import Trader
 from Trainer import chosse_trainer
+from Test_Fight_funktion import choose_attack
 
 
 def trainer_fight():
@@ -19,7 +20,7 @@ def trainer_fight():
     while Gamestate.player.infight and trainer_list_len > 0 and player_list_len > 0:
         print(">>>Kampfmenü<<<\n")
         Choose_menu.menu("Was willst du tun",
-                         {"Angriff": attackenmenu, "Pokemon wechseln": pokemon_change.pokemon_change,
+                         {"Angriff": choose_attack, "Pokemon wechseln": pokemon_change.pokemon_change,
                           "Status deiner Pokemon": pokemon_stats})
 
 
