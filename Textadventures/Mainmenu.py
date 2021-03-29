@@ -5,6 +5,22 @@ import pokemon_change
 import Choose_menu
 import Gamestate
 import Trader
+from Trainer import chosse_trainer
+
+
+def trainer_fight():
+    trainer_to_fight = chosse_trainer()
+    trainer_list_len = len(trainer_to_fight.pokemon_list)
+    player_list_len = len(Gamestate.player.pokemon_list)
+    Gamestate.player.pokemon_to_fight = trainer_to_fight.pokemon_list[0]
+    print(trainer_to_fight.name, "möchte Kämpfen.\n", trainer_to_fight.name, "'s erstes Pokemon ist:", Gamestate.player.pokemon_to_fight.Name,
+          "Level:", Gamestate.player.pokemon_to_fight.Level)
+    Gamestate.player.infight = True
+    while Gamestate.player.infight and trainer_list_len > 0 and player_list_len > 0:
+        print(">>>Kampfmenü<<<\n")
+        Choose_menu.menu("Was willst du tun",
+                         {"Angriff": attackenmenu, "Pokemon wechseln": pokemon_change.pokemon_change,
+                          "Status deiner Pokemon": pokemon_stats})
 
 
 def fight():
@@ -18,7 +34,8 @@ def fight():
         print(">>>Kampfmenü<<<\n")
         Choose_menu.menu("Was willst du tun",
                          {"Angriff": attackenmenu, "Pokemon wechseln": pokemon_change.pokemon_change,
-                          "Status deiner Pokemon": pokemon_stats, "Weg laufen": run, "Pokemon fangen": catch_pokemon.catch_pokemon})
+                          "Status deiner Pokemon": pokemon_stats, "Weg laufen": run,
+                          "Pokemon fangen": catch_pokemon.catch_pokemon})
 
 
 def shop():
@@ -26,14 +43,12 @@ def shop():
 
 
 def inventar():
-
     if Gamestate.player.inventar == {}:
         print("Dein Inventar ist leer. Geh in den Shop um dir Items zu kaufen.")
     else:
         print("In deinem Inventar befinden sich folgende Items")
         for key, value in Gamestate.player.inventar.items():
             print(key.name, value)
-
 
 
 def pokemon_stats():

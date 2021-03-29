@@ -2,9 +2,12 @@ import random
 import Gamestate
 import Choose_menu
 import Mainmenu
+import Conversations
+from PokemonClass import startpokemon
 
 
-
+def trainer_pokemon_fight():
+    pass
 
 def attackenmenu():
     print("Diese Attacken besitzt", Gamestate.player.current_pokemon.Name)
@@ -19,7 +22,7 @@ def attackenmenu():
         if answer.isnumeric():
             int_answer = int(answer)
     if Gamestate.player.current_pokemon.Attacklist[int_answer - 1].Attack_Counter_Current == 0:
-        print("Du hast leider keine attaken mehr frei davon")
+        print("Du hast leider keine attaken mehr frei davon.")
         return
     print(Gamestate.player.current_pokemon.Name, "greift an mit:",
           Gamestate.player.current_pokemon.Attacklist[int(int_answer) - 1].Name)
@@ -110,13 +113,15 @@ def current_pokemon_stats():
           Gamestate.player.current_pokemon.Needed_ep, "EP für level", Gamestate.player.current_pokemon.Level + 1)
 
 
-def start_load():
-    userinput = input("Wills du Starten oder Spielstand landen?")
-    if userinput == "start":
-        return
-    elif userinput == "laden":
-        Mainmenu.load_game()
-        Choose_menu.menu("Was willst du tun?\n",
-             {"Kämpfen": Mainmenu.fight, "Pokecenter": Mainmenu.pokecenter, "Pokemon": Mainmenu.pokemon_stats, "Pokemon wechseln": Mainmenu.pokemon_change,
-              "Inventar": Mainmenu.inventar,
-              "Geldbeutel": Mainmenu.money, "Einkaufen": Mainmenu.shop, "save": Mainmenu.save, "load": Mainmenu.load_game})
+def start_game():
+    print(Conversations.Intro)
+    Gamestate.player.name = input("\"Wie lautet dein Name?\"\n>")
+    print("Prof. Acai: \"Ich heisse dich Willkommen", Gamestate.player.name, "\"",
+          "\n\"Mein Name ist Prof. Acai\"\n\"Um Deine Reise starten zu können, brauchst Du natürlich erstmal ein Start-Pokemon.\"\n\"Bitte wähle eines der folgenen aus:\"")
+    firstpokemon = input("Schiggy-WASSER; Glumanda-FEUER, Bisasam-PFLANZE\n>")
+    Gamestate.player.pokemon_list.append(startpokemon(firstpokemon))
+    Gamestate.player.current_pokemon = Gamestate.player.pokemon_list[0]
+
+
+def The_Start():
+    start_game()
